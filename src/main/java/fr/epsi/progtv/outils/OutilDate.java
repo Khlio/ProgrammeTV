@@ -29,48 +29,25 @@ public class OutilDate {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		GregorianCalendar gc = new GregorianCalendar();
-		gc.setTime(date);
-		Heure heure = new Heure(gc.get(Calendar.HOUR_OF_DAY), gc.get(Calendar.MINUTE));
+		Calendar instance = GregorianCalendar.getInstance();
+		instance.setTime(date);
+		Heure heure = new Heure(instance.get(Calendar.HOUR_OF_DAY), instance.get(Calendar.MINUTE));
 		return heure;
 	}
 
 	public static int compareADateDAujourdhui(Date date) {
-		int compare;
-		java.util.Date aujourdhui = new java.util.Date();
-		GregorianCalendar gc = new GregorianCalendar();
-		gc.setTime(aujourdhui);
-		
-		if (date.getAnnee() == gc.get(Calendar.YEAR)) {
-			if (date.getMois() == gc.get(Calendar.MONTH)+1) {
-				if (date.getJour() == gc.get(Calendar.DAY_OF_MONTH)) {
-					compare = Constantes.AUJOURDHUI;
-				} else if (date.getJour() > gc.get(Calendar.DAY_OF_MONTH)) {
-					compare = Constantes.POSTERIEUR;
-				} else {
-					compare = Constantes.ANTERIEUR;
-				}
-			} else if (date.getMois() > gc.get(Calendar.MONTH)+1) {
-				compare = Constantes.POSTERIEUR;
-			} else {
-				compare = Constantes.ANTERIEUR;
-			}
-		} else if (date.getAnnee() > gc.get(Calendar.YEAR)) {
-			compare = Constantes.POSTERIEUR;
-		} else {
-			compare = Constantes.ANTERIEUR;
-		}
-		return compare;
+		Calendar aujourdhui = GregorianCalendar.getInstance();
+		Calendar dateAComparer = GregorianCalendar.getInstance();
+		dateAComparer.set(date.getAnnee(), date.getMois()-1, date.getJour());
+		return dateAComparer.compareTo(aujourdhui);
 	}
 
 	public static boolean heureActuelleInferieureA(Heure heure) {
 		boolean estInferieure = false;
-		java.util.Date aujourdhui = new java.util.Date();
-		GregorianCalendar gc = new GregorianCalendar();
-		gc.setTime(aujourdhui);
+		Calendar aujourdhui = GregorianCalendar.getInstance();
 		
-		if (heure.getHeure() > gc.get(Calendar.HOUR_OF_DAY)
-				|| (heure.getHeure() == gc.get(Calendar.HOUR_OF_DAY) && heure.getMinute() > gc.get(Calendar.MINUTE))) {
+		if (heure.getHeure() > aujourdhui.get(Calendar.HOUR_OF_DAY)
+				|| (heure.getHeure() == aujourdhui.get(Calendar.HOUR_OF_DAY) && heure.getMinute() > aujourdhui.get(Calendar.MINUTE))) {
 			estInferieure = !estInferieure;
 		}
 		return estInferieure;//TODO gérer 23h < 00h

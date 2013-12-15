@@ -26,7 +26,7 @@ public class Date implements Serializable {
 	private String affichage;
 
 	public Date() {
-		this(2000, 1, 1);
+		this(1, 1, 2000);
 	}
 	
 	public Date(Integer jour, Integer mois, Integer annee) {

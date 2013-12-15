@@ -8,8 +8,6 @@ import org.junit.Test;
 
 import fr.epsi.progtv.modeles.Date;
 import fr.epsi.progtv.modeles.Heure;
-import fr.epsi.progtv.outils.Constantes;
-import fr.epsi.progtv.outils.OutilDate;
 
 public class OutilDateTest {
 
@@ -49,10 +47,8 @@ public class OutilDateTest {
 	
 	@Test
 	public void testCompareDateIdentiqueADateDaujourdhui() {
-		java.util.Date aujourdhui = new java.util.Date();
-		GregorianCalendar gc = new GregorianCalendar();
-		gc.setTime(aujourdhui);
-		Date dateIdentique = new Date(gc.get(Calendar.DAY_OF_MONTH), gc.get(Calendar.MONTH)+1, gc.get(Calendar.YEAR));
+		Calendar aujourdhui = GregorianCalendar.getInstance();
+		Date dateIdentique = new Date(aujourdhui.get(Calendar.DAY_OF_MONTH), aujourdhui.get(Calendar.MONTH)+1, aujourdhui.get(Calendar.YEAR));
 		int compare = OutilDate.compareADateDAujourdhui(dateIdentique);
 		
 		Assert.assertEquals(Constantes.AUJOURDHUI, compare);
@@ -60,13 +56,29 @@ public class OutilDateTest {
 	
 	@Test
 	public void testHeureActuelleInferieureAUneHeure() {
-		java.util.Date aujourdhui = new java.util.Date();
-		GregorianCalendar gc = new GregorianCalendar();
-		gc.setTime(aujourdhui);
-		Heure heure = new Heure(gc.get(Calendar.HOUR_OF_DAY), gc.get(Calendar.MINUTE)+1);
+		Calendar aujourdhui = GregorianCalendar.getInstance();
+		Heure heure = new Heure(aujourdhui.get(Calendar.HOUR_OF_DAY), aujourdhui.get(Calendar.MINUTE)+1);
 		boolean estInferieure = OutilDate.heureActuelleInferieureA(heure);
 		
 		Assert.assertTrue(estInferieure);
+	}
+	
+	@Test
+	public void testHeureActuelleSuperieureAUneHeure() {
+		Calendar aujourdhui = GregorianCalendar.getInstance();
+		Heure heure = new Heure(aujourdhui.get(Calendar.HOUR_OF_DAY), aujourdhui.get(Calendar.MINUTE)-1);
+		boolean estInferieure = OutilDate.heureActuelleInferieureA(heure);
+		
+		Assert.assertFalse(estInferieure);
+	}
+	
+	@Test
+	public void testHeureActuelleIdentiqueAUneHeure() {
+		Calendar aujourdhui = GregorianCalendar.getInstance();
+		Heure heure = new Heure(aujourdhui.get(Calendar.HOUR_OF_DAY), aujourdhui.get(Calendar.MINUTE));
+		boolean estInferieure = OutilDate.heureActuelleInferieureA(heure);
+		
+		Assert.assertFalse(estInferieure);
 	}
 	
 }
