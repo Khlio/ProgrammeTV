@@ -61,16 +61,18 @@ public class ServiceProgrammes {
 	public List<Programme> programmesDuSoirDeLaChaine(Integer idChaine) {
 		List<Programme> lesProgrammesDuSoir = new ArrayList<>();
 		List<Programme> lesProgrammesDeLaChaine = programmesDuneChaine(idChaine);
-		int compteur = 0;
+		List<Programme> lesProgrammesEntre20hEt21h = programmesEntre20hEt21h(lesProgrammesDeLaChaine);
+		Programme premierProgramme = lesProgrammesEntre20hEt21h.get(lesProgrammesEntre20hEt21h.size()-1);
 		
-		for (Programme programme : lesProgrammesDeLaChaine) {
-			if (Constantes.AUJOURDHUI == OutilDate.compareADateDAujourdhui(programme.getDateDebut())
-					&& 20 <= programme.getHeureDebut().getHeure() && 2 > compteur) {
+		for (int i = 0 ; i < lesProgrammesDeLaChaine.size(); i++) {
+			Programme programme = lesProgrammesDeLaChaine.get(i);
+			if (programme.equals(premierProgramme)) {
 				lesProgrammesDuSoir.add(programme);
-				compteur++;
+				lesProgrammesDuSoir.add(lesProgrammesDeLaChaine.get(i+1));
+				break;
 			}
 		}
-		return lesProgrammesDuSoir;//TODO algo heures ?
+		return lesProgrammesDuSoir;
 	}
 
 	public List<Programme> programmesDuMomentDeLaChaine(Integer idChaine) {
@@ -86,6 +88,17 @@ public class ServiceProgrammes {
 			}
 		}
 		return lesProgrammesDuMoment;
+	}
+
+	public List<Programme> programmesEntre20hEt21h(List<Programme> programmesDuneChaine) {
+		List<Programme> programmesEntre20het21h = new ArrayList<>();
+		for (Programme programme : programmesDuneChaine) {
+			if (Constantes.AUJOURDHUI == OutilDate.compareADateDAujourdhui(programme.getDateDebut()) 
+					&& 20 <= programme.getHeureDebut().getHeure() && 21 > programme.getHeureDebut().getHeure()) {
+				programmesEntre20het21h.add(programme);
+			}
+		}
+		return programmesEntre20het21h;
 	}
 
 }

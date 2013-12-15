@@ -43,14 +43,18 @@ public class OutilDate {
 	}
 
 	public static boolean heureActuelleInferieureA(Heure heure) {
-		boolean estInferieure = false;
 		Calendar aujourdhui = GregorianCalendar.getInstance();
-		
-		if (heure.getHeure() > aujourdhui.get(Calendar.HOUR_OF_DAY)
-				|| (heure.getHeure() == aujourdhui.get(Calendar.HOUR_OF_DAY) && heure.getMinute() > aujourdhui.get(Calendar.MINUTE))) {
-			estInferieure = !estInferieure;
-		}
-		return estInferieure;//TODO gérer 23h < 00h
+		Calendar heureAComparer = GregorianCalendar.getInstance();
+		heureAComparer.set(aujourdhui.get(Calendar.YEAR), aujourdhui.get(Calendar.MONTH), 
+				aujourdhui.get(Calendar.DAY_OF_MONTH) + (0 <= heure.getHeure() && 4 >= heure.getHeure() ? 1 : 0), 
+				heure.getHeure(), heure.getMinute());
+		return aujourdhui.before(heureAComparer);
+	}
+
+	public static Date dateAujourdhui() {
+		Calendar aujourdhui = GregorianCalendar.getInstance();
+		Date dateAujourdhui = new Date(aujourdhui.get(Calendar.DAY_OF_MONTH), aujourdhui.get(Calendar.MONTH)+1, aujourdhui.get(Calendar.YEAR));
+		return dateAujourdhui;
 	}
 	
 }

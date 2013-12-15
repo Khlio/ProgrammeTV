@@ -64,6 +64,14 @@ public class OutilDateTest {
 	}
 	
 	@Test
+	public void testHeureActuelleInferieureAMinuit() {
+		Heure heure = new Heure(0, 0);
+		boolean estInferieure = OutilDate.heureActuelleInferieureA(heure);
+		
+		Assert.assertTrue(estInferieure);
+	}
+	
+	@Test
 	public void testHeureActuelleSuperieureAUneHeure() {
 		Calendar aujourdhui = GregorianCalendar.getInstance();
 		Heure heure = new Heure(aujourdhui.get(Calendar.HOUR_OF_DAY), aujourdhui.get(Calendar.MINUTE)-1);
@@ -79,6 +87,14 @@ public class OutilDateTest {
 		boolean estInferieure = OutilDate.heureActuelleInferieureA(heure);
 		
 		Assert.assertFalse(estInferieure);
+	}
+	
+	@Test
+	public void testDateAujourdhui() {
+		Date dateAujourdhui = OutilDate.dateAujourdhui();
+		
+		Assert.assertNotNull(dateAujourdhui);
+		Assert.assertEquals(Constantes.AUJOURDHUI, OutilDate.compareADateDAujourdhui(dateAujourdhui));
 	}
 	
 }

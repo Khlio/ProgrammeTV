@@ -1,5 +1,6 @@
 package fr.epsi.progtv.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -8,10 +9,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import fr.epsi.progtv.entrepots.Entrepots;
+import fr.epsi.progtv.modeles.Heure;
 import fr.epsi.progtv.modeles.Programme;
 import fr.epsi.progtv.outils.Constantes;
+import fr.epsi.progtv.outils.OutilDate;
 import fr.epsi.progtv.outils.ParserXML;
-import fr.epsi.progtv.services.ServiceProgrammes;
 
 public class ServiceProgrammeTest {
 	
@@ -66,6 +68,22 @@ public class ServiceProgrammeTest {
 		
 		Assert.assertNotNull(lesProgrammes);
 		Assert.assertEquals(2, lesProgrammes.size());
+	}
+	
+	@Test
+	public void testProgrammesEntre20het21h() {
+		List<Programme> programmesDuneChaine = new ArrayList<>();
+		Programme programme1 = new Programme("Programme1", "", OutilDate.dateAujourdhui(), OutilDate.dateAujourdhui(), 
+				new Heure(19, 0), new Heure(20, 30), null, "", "");
+		programmesDuneChaine.add(programme1);
+		Programme programme2 = new Programme("Programme2", "", OutilDate.dateAujourdhui(), OutilDate.dateAujourdhui(), 
+				new Heure(20, 50), new Heure(22, 15), null, "", "");
+		programmesDuneChaine.add(programme2);
+		List<Programme> lesProgrammes = service.programmesEntre20hEt21h(programmesDuneChaine);
+		
+		Assert.assertNotNull(lesProgrammes);
+		Assert.assertEquals(1, lesProgrammes.size());
+		Assert.assertEquals("Programme2", lesProgrammes.get(0).getNom());
 	}
 	
 	@Test

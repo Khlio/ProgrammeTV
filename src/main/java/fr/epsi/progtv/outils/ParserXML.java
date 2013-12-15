@@ -58,7 +58,8 @@ public class ParserXML {
 			String dateDebut = unProgramme.getAttributeValue("start");
 			String dateFin = unProgramme.getAttributeValue("stop");
 			String csa = unProgramme.getChild("rating").getChildText("value");
-			String categorie = unProgramme.getChildText("category");
+			List<Element> lesCategories = unProgramme.getChildren("category");
+			String categorie = (2 <= lesCategories.size() ? lesCategories.get(1).getText() : lesCategories.get(0).getText());
 			
 			Programme programme = chaine.ajouteProgramme(new Programme(nom, description, OutilDate.parseDate(dateDebut), OutilDate.parseDate(dateFin), 
 					OutilDate.parseHeure(dateDebut), OutilDate.parseHeure(dateFin), chaine, csa, categorie));

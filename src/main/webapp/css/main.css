@@ -12,3 +12,13 @@ body {
 	padding-top: 10px;
 	border-bottom: solid 1px;
 }
+
+.chaine a{
+	text-decoration:none;
+	color:black;
+}
+
+.programmes {
+	border-bottom: solid 1px;
+	padding-bottom: 10px;
+}
