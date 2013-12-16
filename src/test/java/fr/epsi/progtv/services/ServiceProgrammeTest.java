@@ -83,8 +83,7 @@ public class ServiceProgrammeTest {
 		List<Programme> lesProgrammes = service.programmesDuMoment();
 		
 		Assert.assertNotNull(lesProgrammes);
-		Assert.assertTrue(!lesProgrammes.isEmpty());
-		Assert.assertTrue(3*19 >= lesProgrammes.size());
+		Assert.assertEquals(3*19, lesProgrammes.size());
 	}
 	
 	@Test

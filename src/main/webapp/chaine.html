@@ -23,11 +23,11 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">Programme TV</a>
+					<a class="navbar-brand" href=".">Programme TV</a>
 				</div>
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="index.html">Accueil</a></li>
+						<li><a href=".">Accueil</a></li>
 						<li><a href="#about">A propos</a></li>
 						<li><a href="#contact">Contact</a></li>
 					</ul>
@@ -35,35 +35,11 @@
 			</div>
 		</div>
 
-		<div class="container">
+		<div id="programmes" class="container">
 			<div class="row col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-4">
-				<a class="col-lg-1 col-md-1 col-sm-1" href="#" title="Cha&icirc;ne pr&eacute;c&eacute;dente">&lt;&lt;</a>
-				<img class="img-responsive col-lg-2 col-md-2 col-sm-2" src="img/tf1.png">
-				<a class="col-lg-1 col-md-1 col-sm-1" align="right" href="#" title="Cha&icirc;ne suivante">&gt;&gt;</a>
-			</div>
-			<div class="row programmes col-lg-10 col-lg-offset-1 visible-lg col-md-10 col-md-offset-1 visible-md">
-				<div class="col-lg-6 col-md-6">
-					<a href="programme.html"><h4>NCIS</h4></a>
-					<p>20:50 - Film d'action</p>
-					<p>Une serie que je ne regarde pas, trop de series criminelles</p>
-				</div>
-				<div class="col-lg-6 col-md-6">
-					<a href="programme.html"><h4>NCIS</h4></a>						
-					<p>20:50 - Film d'action</p>
-					<p>Une serie que je ne regarde pas, trop de series criminelles</p>
-				</div>
-			</div>
-			<div class="row col-md-11 col-md-offset-1 visible-sm visible-xs">
-				<div class="programmes">
-					<a href="programme.html"><h4>NCIS</h4></a>
-					<p>20:50 - Film d'action</p>
-					<p>Une serie que je ne regarde pas, trop de series criminelles</p>
-				</div>
-				<div class="programmes">
-					<a href="programme.html"><h4>NCIS</h4></a>
-					<p>20:50 - Film d'action</p>
-					<p>Une serie que je ne regarde pas, trop de series criminelles</p>
-				</div>
+				<a id="lienChainePrecedente" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" href="javascript:;" title="Cha&icirc;ne pr&eacute;c&eacute;dente">&lt;&lt;</a>
+				<img id="imageChaine" class="img-responsive col-lg-2 col-md-2 col-sm-2 col-xs-2">
+				<a id="lienChaineSuivante" class="col-lg-1 col-md-1 col-sm-1 col-xs-1" align="right" href="javascript:;" title="Cha&icirc;ne suivante">&gt;&gt;</a>
 			</div>
 		</div>
     </body>
@@ -72,5 +48,5 @@
 	<script src="js/lib/jquery-2.0.3.min.js"></script>
 	<script src="js/lib/bootstrap.min.js"></script>
 	<script src="js/outils.js"></script>
-	<script src="js/main.js"></script>
+	<script src="js/chaine.js"></script>
 </html>

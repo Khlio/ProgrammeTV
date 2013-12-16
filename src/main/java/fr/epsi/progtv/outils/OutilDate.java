@@ -41,20 +41,24 @@ public class OutilDate {
 		dateAComparer.set(date.getAnnee(), date.getMois()-1, date.getJour());
 		return dateAComparer.compareTo(aujourdhui);
 	}
-
-	public static boolean heureActuelleInferieureA(Heure heure) {
+	
+	public static int compareAAujourdhui(Date date, Heure heure) {
 		Calendar aujourdhui = GregorianCalendar.getInstance();
-		Calendar heureAComparer = GregorianCalendar.getInstance();
-		heureAComparer.set(aujourdhui.get(Calendar.YEAR), aujourdhui.get(Calendar.MONTH), 
-				aujourdhui.get(Calendar.DAY_OF_MONTH) + (23 == aujourdhui.get(Calendar.HOUR_OF_DAY) && 0 <= heure.getHeure() && 4 >= heure.getHeure() ? 1 : 0), 
-				heure.getHeure(), heure.getMinute());
-		return aujourdhui.before(heureAComparer);
+		Calendar aComparer = GregorianCalendar.getInstance();
+		aComparer.set(date.getAnnee(), date.getMois()-1, date.getJour(), heure.getHeure(), heure.getMinute());
+		return aComparer.compareTo(aujourdhui);
 	}
 
 	public static Date dateAujourdhui() {
 		Calendar aujourdhui = GregorianCalendar.getInstance();
 		Date dateAujourdhui = new Date(aujourdhui.get(Calendar.DAY_OF_MONTH), aujourdhui.get(Calendar.MONTH)+1, aujourdhui.get(Calendar.YEAR));
 		return dateAujourdhui;
+	}
+
+	public static Heure heureAujourdhui() {
+		Calendar aujourdhui = GregorianCalendar.getInstance();
+		Heure heureAujourdhui = new Heure(aujourdhui.get(Calendar.HOUR_OF_DAY), aujourdhui.get(Calendar.MINUTE));
+		return heureAujourdhui;
 	}
 	
 }

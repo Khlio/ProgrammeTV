@@ -1,8 +1,5 @@
 package fr.epsi.progtv.outils;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,63 +27,49 @@ public class OutilDateTest {
 	}
 	
 	@Test
-	public void testCompareDateAnterieurADateDaujourdhui() {
-		Date dateAnterieur = new Date();
-		int compare = OutilDate.compareADateDAujourdhui(dateAnterieur);
+	public void testCompareDateAnterieureADateDaujourdhui() {
+		Date dateAnterieure = new Date();
+		int compare = OutilDate.compareADateDAujourdhui(dateAnterieure);
 		
 		Assert.assertEquals(Constantes.ANTERIEUR, compare);
 	}
 	
 	@Test
-	public void testCompareDatePosterieurADateDaujourdhui() {
-		Date dateSuperieur = new Date(1, 1, 3535);
-		int compare = OutilDate.compareADateDAujourdhui(dateSuperieur);
+	public void testCompareDatePosterieureADateDaujourdhui() {
+		Date datePosterieure = new Date(1, 1, 3535);
+		int compare = OutilDate.compareADateDAujourdhui(datePosterieure);
 		
 		Assert.assertEquals(Constantes.POSTERIEUR, compare);
 	}
 	
 	@Test
 	public void testCompareDateIdentiqueADateDaujourdhui() {
-		Calendar aujourdhui = GregorianCalendar.getInstance();
-		Date dateIdentique = new Date(aujourdhui.get(Calendar.DAY_OF_MONTH), aujourdhui.get(Calendar.MONTH)+1, aujourdhui.get(Calendar.YEAR));
-		int compare = OutilDate.compareADateDAujourdhui(dateIdentique);
+		int compare = OutilDate.compareADateDAujourdhui(OutilDate.dateAujourdhui());
 		
 		Assert.assertEquals(Constantes.AUJOURDHUI, compare);
 	}
 	
 	@Test
-	public void testHeureActuelleInferieureAUneHeure() {
-		Calendar aujourdhui = GregorianCalendar.getInstance();
-		Heure heure = new Heure(aujourdhui.get(Calendar.HOUR_OF_DAY), aujourdhui.get(Calendar.MINUTE)+1);
-		boolean estInferieure = OutilDate.heureActuelleInferieureA(heure);
+	public void testCompareAnterieurAAujourdhui() {
+		Heure heureAnterieure = new Heure();
+		int compare = OutilDate.compareAAujourdhui(OutilDate.dateAujourdhui(), heureAnterieure);
 		
-		Assert.assertTrue(estInferieure);
-	}
-	
-	/*@Test
-	public void testHeureActuelleInferieureAMinuit() {
-		Heure heure = new Heure(0, 0);
-		boolean estInferieure = OutilDate.heureActuelleInferieureA(heure);
-		
-		Assert.assertTrue(estInferieure);
-	}*/
-	
-	@Test
-	public void testHeureActuelleSuperieureAUneHeure() {
-		Calendar aujourdhui = GregorianCalendar.getInstance();
-		Heure heure = new Heure(aujourdhui.get(Calendar.HOUR_OF_DAY), aujourdhui.get(Calendar.MINUTE)-1);
-		boolean estInferieure = OutilDate.heureActuelleInferieureA(heure);
-		
-		Assert.assertFalse(estInferieure);
+		Assert.assertEquals(Constantes.ANTERIEUR, compare);
 	}
 	
 	@Test
-	public void testHeureActuelleIdentiqueAUneHeure() {
-		Calendar aujourdhui = GregorianCalendar.getInstance();
-		Heure heure = new Heure(aujourdhui.get(Calendar.HOUR_OF_DAY), aujourdhui.get(Calendar.MINUTE));
-		boolean estInferieure = OutilDate.heureActuelleInferieureA(heure);
+	public void testComparePosterieurAAujourdhui() {
+		Heure heurePosterieure = new Heure(23, 59);
+		int compare = OutilDate.compareAAujourdhui(OutilDate.dateAujourdhui(), heurePosterieure);
 		
-		Assert.assertFalse(estInferieure);
+		Assert.assertEquals(Constantes.POSTERIEUR, compare);
+	}
+	
+	@Test
+	public void testCompareIdentiqueAAujourdhui() {
+		int compare = OutilDate.compareAAujourdhui(OutilDate.dateAujourdhui(), OutilDate.heureAujourdhui());
+		
+		Assert.assertEquals(Constantes.AUJOURDHUI, compare);
 	}
 	
 	@Test
@@ -95,6 +78,14 @@ public class OutilDateTest {
 		
 		Assert.assertNotNull(dateAujourdhui);
 		Assert.assertEquals(Constantes.AUJOURDHUI, OutilDate.compareADateDAujourdhui(dateAujourdhui));
+	}
+	
+	@Test
+	public void testHeureAujourdhui() {
+		Heure heureAujourdhui = OutilDate.heureAujourdhui();
+		
+		Assert.assertNotNull(heureAujourdhui);
+		Assert.assertEquals(Constantes.AUJOURDHUI, OutilDate.compareAAujourdhui(OutilDate.dateAujourdhui(), heureAujourdhui));
 	}
 	
 }

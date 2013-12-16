@@ -94,13 +94,16 @@ public class ServiceProgrammes {
 	public List<Programme> programmesDuMomentDeLaChaine(Integer idChaine) {
 		List<Programme> lesProgrammesDuMoment = new ArrayList<>();
 		List<Programme> lesProgrammesDeLaChaine = programmesDuneChaine(idChaine);
-		int compteur = 0;
 		
-		for (Programme programme : lesProgrammesDeLaChaine) {
-			if (3 > compteur && Constantes.AUJOURDHUI == OutilDate.compareADateDAujourdhui(programme.getDateDebut())
-					&& OutilDate.heureActuelleInferieureA(programme.getHeureFin())) {
+		for (int i = 0; i < lesProgrammesDeLaChaine.size(); i++) {
+			Programme programme = lesProgrammesDeLaChaine.get(i);
+			if ((Constantes.ANTERIEUR == OutilDate.compareAAujourdhui(programme.getDateDebut(), programme.getHeureDebut())
+					|| Constantes.AUJOURDHUI == OutilDate.compareAAujourdhui(programme.getDateDebut(), programme.getHeureDebut()))
+					&& Constantes.POSTERIEUR == OutilDate.compareAAujourdhui(programme.getDateFin(), programme.getHeureFin())) {
 				lesProgrammesDuMoment.add(programme);
-				compteur++;
+				lesProgrammesDuMoment.add(lesProgrammesDeLaChaine.get(i+1));
+				lesProgrammesDuMoment.add(lesProgrammesDeLaChaine.get(i+2));
+				break;
 			}
 		}
 		return lesProgrammesDuMoment;
