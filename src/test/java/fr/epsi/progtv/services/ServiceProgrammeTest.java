@@ -47,14 +47,6 @@ public class ServiceProgrammeTest {
 	}
 	
 	@Test
-	public void testProgrammesDuneChaine() {
-		List<Programme> lesProgrammes = service.programmesDuneChaine(1);
-		
-		Assert.assertNotNull(lesProgrammes);
-		Assert.assertTrue(!lesProgrammes.isEmpty());
-	}
-	
-	@Test
 	public void testProgrammesDuSoir() {
 		List<Programme> lesProgrammes = service.programmesDuSoir();
 		
@@ -87,11 +79,60 @@ public class ServiceProgrammeTest {
 	}
 	
 	@Test
+	public void testProgrammesDuMoment() {
+		List<Programme> lesProgrammes = service.programmesDuMoment();
+		
+		Assert.assertNotNull(lesProgrammes);
+		Assert.assertTrue(!lesProgrammes.isEmpty());
+		Assert.assertTrue(3*19 >= lesProgrammes.size());
+	}
+	
+	@Test
 	public void testProgrammesDuMomentDuneChaine() {
 		List<Programme> lesProgrammes = service.programmesDuMomentDeLaChaine(1);
 		
 		Assert.assertNotNull(lesProgrammes);
 		Assert.assertEquals(3, lesProgrammes.size());
+	}
+	
+	@Test
+	public void testProgrammesDuneChaine() {
+		List<Programme> lesProgrammes = service.programmesDuneChaine(1);
+		
+		Assert.assertNotNull(lesProgrammes);
+		Assert.assertTrue(!lesProgrammes.isEmpty());
+	}
+	
+	@Test
+	public void testProgrammesDuneChaineEnFonctionDuneDate() {
+		List<Programme> lesProgrammes = service.programmesDuneChaine(1, OutilDate.dateAujourdhui());
+		
+		Assert.assertNotNull(lesProgrammes);
+		Assert.assertTrue(!lesProgrammes.isEmpty());
+	}
+	
+	@Test
+	public void testProgrammesDuneChaineEnFonctionDuneDateString() {
+		List<Programme> lesProgrammes = service.programmesDuneChaine(1, "20131215");
+		
+		Assert.assertNotNull(lesProgrammes);
+		Assert.assertTrue(!lesProgrammes.isEmpty());
+	}
+	
+	@Test
+	public void testDetailsDuProgrammePrecedent() {
+		Programme programmePrecedent = service.detailsDuProgrammePrecedent(3864);
+		
+		Assert.assertNotNull(programmePrecedent);
+		Assert.assertEquals(3833, programmePrecedent.getId().intValue());
+	}
+	
+	@Test
+	public void testDetailsDuProgrammeSuivant() {
+		Programme programmeSuivant = service.detailsDuProgrammeSuivant(3833);
+		
+		Assert.assertNotNull(programmeSuivant);
+		Assert.assertEquals(3864, programmeSuivant.getId().intValue());
 	}
 	
 }

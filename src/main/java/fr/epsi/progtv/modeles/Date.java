@@ -73,4 +73,30 @@ public class Date implements Serializable {
 		return getAffichage();
 	}
 	
+	@Override
+	public boolean equals(Object unObjet) {
+		boolean egal = false;
+		if (this == unObjet) {
+			egal = true;
+		} else if (unObjet instanceof Date) {
+			Date uneDate = (Date)unObjet;
+			if (jour.equals(uneDate.getJour()) 
+					&& mois.equals(uneDate.getMois())
+					&& annee.equals(uneDate.getAnnee())) {
+				egal = true;
+			}
+		}
+		return egal;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int resultat = 1;
+		resultat = prime * resultat + ((null == getJour()) ? 0 : getJour().hashCode());
+		resultat = prime * resultat + ((null == getMois()) ? 0 : getMois().hashCode());
+		resultat = prime * resultat + ((null == getAnnee()) ? 0 : getAnnee().hashCode());
+		return resultat;
+	}
+	
 }
