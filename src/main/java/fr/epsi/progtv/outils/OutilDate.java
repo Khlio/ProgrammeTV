@@ -46,7 +46,7 @@ public class OutilDate {
 		Calendar aujourdhui = GregorianCalendar.getInstance();
 		Calendar heureAComparer = GregorianCalendar.getInstance();
 		heureAComparer.set(aujourdhui.get(Calendar.YEAR), aujourdhui.get(Calendar.MONTH), 
-				aujourdhui.get(Calendar.DAY_OF_MONTH) + (0 <= heure.getHeure() && 4 >= heure.getHeure() ? 1 : 0), 
+				aujourdhui.get(Calendar.DAY_OF_MONTH) + (23 == aujourdhui.get(Calendar.HOUR_OF_DAY) && 0 <= heure.getHeure() && 4 >= heure.getHeure() ? 1 : 0), 
 				heure.getHeure(), heure.getMinute());
 		return aujourdhui.before(heureAComparer);
 	}
