@@ -66,10 +66,10 @@ public class ServiceProgrammeTest {
 	public void testProgrammesEntre20het21h() {
 		List<Programme> programmesDuneChaine = new ArrayList<>();
 		Programme programme1 = new Programme("Programme1", "", OutilDate.dateAujourdhui(), OutilDate.dateAujourdhui(), 
-				new Heure(19, 0), new Heure(20, 30), null, "", "");
+				new Heure(19, 0), new Heure(20, 30), null, "", "", null, null);
 		programmesDuneChaine.add(programme1);
 		Programme programme2 = new Programme("Programme2", "", OutilDate.dateAujourdhui(), OutilDate.dateAujourdhui(), 
-				new Heure(20, 50), new Heure(22, 15), null, "", "");
+				new Heure(20, 50), new Heure(22, 15), null, "", "", null, null);
 		programmesDuneChaine.add(programme2);
 		List<Programme> lesProgrammes = service.programmesEntre20hEt21h(programmesDuneChaine);
 		

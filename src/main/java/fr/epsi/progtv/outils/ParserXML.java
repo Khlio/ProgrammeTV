@@ -1,6 +1,7 @@
 package fr.epsi.progtv.outils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.Document;
@@ -11,8 +12,11 @@ import org.jdom2.input.SAXBuilder;
 import fr.epsi.progtv.entrepots.EntrepotChaines;
 import fr.epsi.progtv.entrepots.EntrepotProgrammes;
 import fr.epsi.progtv.entrepots.Entrepots;
+import fr.epsi.progtv.modeles.Acteur;
 import fr.epsi.progtv.modeles.Chaine;
+import fr.epsi.progtv.modeles.Personne;
 import fr.epsi.progtv.modeles.Programme;
+import fr.epsi.progtv.modeles.Realisateur;
 import fr.epsi.progtv.services.ServiceChaines;
 
 public class ParserXML {
@@ -58,11 +62,22 @@ public class ParserXML {
 			String dateDebut = unProgramme.getAttributeValue("start");
 			String dateFin = unProgramme.getAttributeValue("stop");
 			String csa = unProgramme.getChild("rating").getChildText("value");
-			List<Element> lesCategories = unProgramme.getChildren("category");
-			String categorie = (2 <= lesCategories.size() ? lesCategories.get(1).getText() : lesCategories.get(0).getText());
+			String categorie = unProgramme.getChildText("category");
+			
+			Element lesCredits = unProgramme.getChild("credits");
+			List<Personne> acteurs = new ArrayList<>();
+			Personne realisateur = null;
+			if (null != lesCredits) {
+				List<Element> lesActeurs = lesCredits.getChildren("actor");
+				for (Element element : lesActeurs) {
+					Personne acteur = new Acteur(element.getText());
+					acteurs.add(acteur);
+				}
+				realisateur = new Realisateur(lesCredits.getChildText("director"));
+			}
 			
 			Programme programme = chaine.ajouteProgramme(new Programme(nom, description, OutilDate.parseDate(dateDebut), OutilDate.parseDate(dateFin), 
-					OutilDate.parseHeure(dateDebut), OutilDate.parseHeure(dateFin), chaine, csa, categorie));
+					OutilDate.parseHeure(dateDebut), OutilDate.parseHeure(dateFin), chaine, csa, categorie, acteurs, realisateur));
 			programmes.ajoute(programme);
 		}
 	}

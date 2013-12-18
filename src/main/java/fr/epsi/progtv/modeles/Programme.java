@@ -1,6 +1,7 @@
 package fr.epsi.progtv.modeles;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -9,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement
-@XmlType(propOrder={"id", "nom", "description", "dateDebut", "dateFin", "heureDebut", "heureFin", "chaine", "csa", "categorie"})
+@XmlType(propOrder={"id", "nom", "description", "dateDebut", "dateFin", "heureDebut", "heureFin", "chaine", "csa", "categorie", "acteurs", "realisateur"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Programme implements Serializable {
 	
@@ -28,16 +29,19 @@ public class Programme implements Serializable {
 	private Chaine chaine;
 	private String csa;
 	private String categorie;
+	private List<Personne> acteurs;
+	private Personne realisateur;
 	
 	public Programme() {
 		this("");
 	}
 	
 	public Programme(String nom) {
-		this(nom, "", new Date(), new Date(), new Heure(), new Heure(), new Chaine(), "", "");
+		this(nom, "", new Date(), new Date(), new Heure(), new Heure(), new Chaine(), "", "", null, null);
 	}
 	
-	public Programme(String nom, String description, Date dateDebut, Date dateFin, Heure heureDebut, Heure heureFin, Chaine chaine, String csa, String categorie) {
+	public Programme(String nom, String description, Date dateDebut, Date dateFin, Heure heureDebut, Heure heureFin, 
+			Chaine chaine, String csa, String categorie, List<Personne> acteurs, Personne realisateur) {
 		setId(incrementeId());
 		setNom(nom);
 		setDescription(description);
@@ -48,6 +52,8 @@ public class Programme implements Serializable {
 		setChaine(chaine);
 		setCsa(csa);
 		setCategorie(categorie);
+		setActeurs(acteurs);
+		setRealisateur(realisateur);
 	}
 	
 	public static void resetId() {
@@ -144,6 +150,32 @@ public class Programme implements Serializable {
 		} else {
 			this.categorie = categorie;
 		}
+	}
+
+	public List<Personne> getActeurs() {
+		return acteurs;
+	}
+
+	public void setActeurs(List<Personne> acteurs) {
+		this.acteurs = acteurs;
+	}
+	
+	public Personne ajouteActeur(Personne acteur) {
+		acteurs.add(acteur);
+		return acteur;
+	}
+	
+	public Personne supprimeActeur(Personne acteur) {
+		acteurs.remove(acteur);
+		return acteur;
+	}
+
+	public Personne getRealisateur() {
+		return realisateur;
+	}
+
+	public void setRealisateur(Personne realisateur) {
+		this.realisateur = realisateur;
 	}
 
 	@Override
