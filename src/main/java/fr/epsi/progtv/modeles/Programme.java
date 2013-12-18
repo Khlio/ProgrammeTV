@@ -9,8 +9,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import fr.epsi.progtv.outils.OutilDate;
+
 @XmlRootElement
-@XmlType(propOrder={"id", "nom", "description", "dateDebut", "dateFin", "heureDebut", "heureFin", "chaine", "csa", "categorie", "acteurs", "realisateur"})
+@XmlType(propOrder={"id", "nom", "description", "dateDebut", "dateFin", "heureDebut", "heureFin", 
+		"chaine", "csa", "categorie", "acteurs", "realisateur", "image", "dateRealisation", "deuxiemeNom", "duree"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Programme implements Serializable {
 	
@@ -31,17 +34,25 @@ public class Programme implements Serializable {
 	private String categorie;
 	private List<Personne> acteurs;
 	private Personne realisateur;
+	private String image;
+	private String dateRealisation;
+	private String deuxiemeNom;
+	private Integer duree;
 	
 	public Programme() {
 		this("");
 	}
 	
 	public Programme(String nom) {
-		this(nom, "", new Date(), new Date(), new Heure(), new Heure(), new Chaine(), "", "", null, null);
+		this(nom, "", new Date(), new Date(), new Heure(), new Heure(), new Chaine(), "", "", null, null, "", "", "");
 	}
 	
-	public Programme(String nom, String description, Date dateDebut, Date dateFin, Heure heureDebut, Heure heureFin, 
-			Chaine chaine, String csa, String categorie, List<Personne> acteurs, Personne realisateur) {
+	public Programme(String nom, Date dateDebut, Date dateFin, Heure heureDebut, Heure heureFin) {
+		this(nom, "", dateDebut, dateFin, heureDebut, heureFin, new Chaine(), "", "", null, null, "", "", "");
+	}
+	
+	public Programme(String nom, String description, Date dateDebut, Date dateFin, Heure heureDebut, Heure heureFin, Chaine chaine, String csa, 
+			String categorie, List<Personne> acteurs, Personne realisateur, String image, String dateRealisation, String deuxiemeNom) {
 		setId(incrementeId());
 		setNom(nom);
 		setDescription(description);
@@ -54,6 +65,10 @@ public class Programme implements Serializable {
 		setCategorie(categorie);
 		setActeurs(acteurs);
 		setRealisateur(realisateur);
+		setImage(image);
+		setDateRealisation(dateRealisation);
+		setDeuxiemeNom(deuxiemeNom);
+		setDuree();
 	}
 	
 	public static void resetId() {
@@ -176,6 +191,38 @@ public class Programme implements Serializable {
 
 	public void setRealisateur(Personne realisateur) {
 		this.realisateur = realisateur;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getDateRealisation() {
+		return dateRealisation;
+	}
+
+	public void setDateRealisation(String dateRealisation) {
+		this.dateRealisation = dateRealisation;
+	}
+
+	public String getDeuxiemeNom() {
+		return deuxiemeNom;
+	}
+
+	public void setDeuxiemeNom(String deuxiemeNom) {
+		this.deuxiemeNom = deuxiemeNom;
+	}
+
+	public Integer getDuree() {
+		return duree;
+	}
+
+	public void setDuree() {
+		this.duree = OutilDate.obtenirLaDuree(getHeureDebut(), getHeureFin());
 	}
 
 	@Override

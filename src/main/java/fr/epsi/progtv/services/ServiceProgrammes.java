@@ -97,9 +97,7 @@ public class ServiceProgrammes {
 		
 		for (int i = 0; i < lesProgrammesDeLaChaine.size(); i++) {
 			Programme programme = lesProgrammesDeLaChaine.get(i);
-			if ((Constantes.ANTERIEUR == OutilDate.compareAAujourdhui(programme.getDateDebut(), programme.getHeureDebut())
-					|| Constantes.AUJOURDHUI == OutilDate.compareAAujourdhui(programme.getDateDebut(), programme.getHeureDebut()))
-					&& Constantes.POSTERIEUR == OutilDate.compareAAujourdhui(programme.getDateFin(), programme.getHeureFin())) {
+			if (OutilDate.aujourdhuiEstEntre(programme.getDateDebut(), programme.getHeureDebut(), programme.getDateFin(), programme.getHeureFin())) {
 				lesProgrammesDuMoment.add(programme);
 				lesProgrammesDuMoment.add(lesProgrammesDeLaChaine.get(i+1));
 				lesProgrammesDuMoment.add(lesProgrammesDeLaChaine.get(i+2));

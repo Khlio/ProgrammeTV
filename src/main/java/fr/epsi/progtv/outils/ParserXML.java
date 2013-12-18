@@ -37,34 +37,33 @@ public class ParserXML {
 	}
 
 	private static void chargerChaine(Document document) {
-		EntrepotChaines chaines = Entrepots.chaines();
-		chaines.nettoie();
+		EntrepotChaines entrepotChaines = Entrepots.chaines();
+		entrepotChaines.nettoie();
 		
 		List<Element> lesChaines = document.getRootElement().getChildren("channel");
 		for (int i = 0; i < 19; i++) {
-			Element uneChaine = lesChaines.get(i);
-			Integer id = Integer.valueOf(uneChaine.getAttributeValue("id"));
-			String nom = uneChaine.getChildText("display-name");
-			chaines.ajoute(new Chaine(id, nom));
+			Element laChaine = lesChaines.get(i);
+			Integer id = Integer.valueOf(laChaine.getAttributeValue("id"));
+			String nom = laChaine.getChildText("display-name");
+			entrepotChaines.ajoute(new Chaine(id, nom));
 		}
 	}
 	
 	private static void chargerProgrammes(Document document) {
-		EntrepotProgrammes programmes = Entrepots.programmes();
-		programmes.nettoie();
+		EntrepotProgrammes entrepotProgrammes = Entrepots.programmes();
+		entrepotProgrammes.nettoie();
 		ServiceChaines serviceChaines = ServiceChaines.getInstance();
 		
 		List<Element> lesProgrammes = document.getRootElement().getChildren("programme");
-		for (Element unProgramme : lesProgrammes) {
-			String nom = unProgramme.getChildText("title");
-			String description = unProgramme.getChildText("desc");
-			Chaine chaine = serviceChaines.detailsDe(Integer.valueOf(unProgramme.getAttributeValue("channel")));
-			String dateDebut = unProgramme.getAttributeValue("start");
-			String dateFin = unProgramme.getAttributeValue("stop");
-			String csa = unProgramme.getChild("rating").getChildText("value");
-			String categorie = unProgramme.getChildText("category");
-			
-			Element lesCredits = unProgramme.getChild("credits");
+		for (Element leProgramme : lesProgrammes) {
+			String nom = leProgramme.getChildText("title");
+			String description = leProgramme.getChildText("desc");
+			Chaine chaine = serviceChaines.detailsDe(Integer.valueOf(leProgramme.getAttributeValue("channel")));
+			String dateDebut = leProgramme.getAttributeValue("start");
+			String dateFin = leProgramme.getAttributeValue("stop");
+			String csa = leProgramme.getChild("rating").getChildText("value");
+			String categorie = leProgramme.getChildText("category");
+			Element lesCredits = leProgramme.getChild("credits");
 			List<Personne> acteurs = new ArrayList<>();
 			Personne realisateur = null;
 			if (null != lesCredits) {
@@ -75,10 +74,15 @@ public class ParserXML {
 				}
 				realisateur = new Realisateur(lesCredits.getChildText("director"));
 			}
+			Element icone = leProgramme.getChild("icon");
+			String image = (null != icone ? icone.getAttributeValue("src") : null);
+			String dateRealisation = leProgramme.getChildText("date");
+			String deuxiemeNom = leProgramme.getChildText("sub-title");
 			
 			Programme programme = chaine.ajouteProgramme(new Programme(nom, description, OutilDate.parseDate(dateDebut), OutilDate.parseDate(dateFin), 
-					OutilDate.parseHeure(dateDebut), OutilDate.parseHeure(dateFin), chaine, csa, categorie, acteurs, realisateur));
-			programmes.ajoute(programme);
+					OutilDate.parseHeure(dateDebut), OutilDate.parseHeure(dateFin), chaine, csa, categorie, acteurs, realisateur, image, 
+					dateRealisation, deuxiemeNom));
+			entrepotProgrammes.ajoute(programme);
 		}
 	}
 
