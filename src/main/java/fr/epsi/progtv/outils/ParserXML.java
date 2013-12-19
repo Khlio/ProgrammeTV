@@ -8,6 +8,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.input.sax.XMLReaders;
 
 import fr.epsi.progtv.entrepots.EntrepotChaines;
 import fr.epsi.progtv.entrepots.EntrepotProgrammes;
@@ -28,6 +29,8 @@ public class ParserXML {
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = null;
 		try {
+			sxb.setXMLReaderFactory(XMLReaders.NONVALIDATING);
+			sxb.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 			document = sxb.build(ParserXML.class.getClassLoader().getResourceAsStream(fichierXML));
 		} catch (JDOMException | IOException e) {
 			e.printStackTrace();
@@ -41,8 +44,7 @@ public class ParserXML {
 		entrepotChaines.nettoie();
 		
 		List<Element> lesChaines = document.getRootElement().getChildren("channel");
-		for (int i = 0; i < 19; i++) {
-			Element laChaine = lesChaines.get(i);
+		for (Element laChaine : lesChaines) {
 			Integer id = Integer.valueOf(laChaine.getAttributeValue("id"));
 			String nom = laChaine.getChildText("display-name");
 			entrepotChaines.ajoute(new Chaine(id, nom));
