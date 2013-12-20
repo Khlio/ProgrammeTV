@@ -11,7 +11,6 @@ import fr.epsi.progtv.entrepots.Entrepots;
 import fr.epsi.progtv.modeles.Chaine;
 import fr.epsi.progtv.outils.Constantes;
 import fr.epsi.progtv.outils.ParserXML;
-import fr.epsi.progtv.services.ServiceChaines;
 
 public class ServiceChainesTest {
 
@@ -19,7 +18,7 @@ public class ServiceChainesTest {
 	
 	@BeforeClass
 	public static void setUp() {
-		ParserXML.execute(Constantes.FICHIER_XML);
+		ParserXML.execute(ServiceChainesTest.class.getClassLoader().getResource(Constantes.FICHIER_XML).getFile());
 		service = ServiceChaines.getInstance();
 	}
 	

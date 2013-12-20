@@ -20,7 +20,7 @@ public class Telecharger {
 			URL url = new URL(libelleURL);
 			fluxEntrant = url.openStream();
 			String nomFichier = url.getFile().substring(url.getFile().lastIndexOf("/") + 1);
-			ecriveur = new FileOutputStream(nomFichier);
+			ecriveur = new FileOutputStream(System.getProperty("user.home") + File.separator + nomFichier);
 			byte[] buffer = new byte[1024];
 			int nombreOctetsLus = 0;
 			
@@ -28,7 +28,7 @@ public class Telecharger {
 				ecriveur.write(buffer, 0, nombreOctetsLus);
 			}
 			ecriveur.flush();
-			fichierTelecharge = new File(nomFichier);
+			fichierTelecharge = new File(System.getProperty("user.home") + File.separator + nomFichier);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

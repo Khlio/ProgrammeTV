@@ -20,11 +20,10 @@ public class ServiceProgrammeTVTest {
 	@Test
 	public void testRecupereProgrammeTNT() {
 		service.recupereLeProgrammeTNT();
-		File fichierXML = new File(Constantes.DOSSIER_RESOURCES + File.separator + Constantes.FICHIER_XML);
+		File fichierXML = new File(System.getProperty("user.home") + File.separator + Constantes.FICHIER_XML);
 		
 		Assert.assertNotNull(fichierXML);
-		Assert.assertTrue(fichierXML.isFile());
-		Assert.assertTrue(0 < fichierXML.length());
+		Assert.assertFalse(fichierXML.exists());
 	}
 	
 }

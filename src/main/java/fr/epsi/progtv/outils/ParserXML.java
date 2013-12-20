@@ -31,7 +31,7 @@ public class ParserXML {
 		try {
 			sxb.setXMLReaderFactory(XMLReaders.NONVALIDATING);
 			sxb.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-			document = sxb.build(ParserXML.class.getClassLoader().getResourceAsStream(fichierXML));
+			document = sxb.build(fichierXML);
 		} catch (JDOMException | IOException e) {
 			e.printStackTrace();
 		}

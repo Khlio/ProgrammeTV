@@ -2,6 +2,7 @@ package fr.epsi.progtv.outils;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import fr.epsi.progtv.modeles.Date;
 import fr.epsi.progtv.modeles.Heure;
@@ -9,6 +10,10 @@ import fr.epsi.progtv.modeles.Heure;
 public class OutilDate {
 
 	private OutilDate() {
+	}
+	
+	public static Calendar calendrierAujourdhui() {
+		return GregorianCalendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
 	}
 	
 	public static Date parseDate(String dateATransformer) {
@@ -27,17 +32,17 @@ public class OutilDate {
 	}
 
 	public static int compareADateDAujourdhui(Date date) {
-		Calendar aujourdhui = GregorianCalendar.getInstance();
-		Calendar dateAComparer = GregorianCalendar.getInstance();
+		Calendar aujourdhui = calendrierAujourdhui();
+		Calendar dateAComparer = calendrierAujourdhui();
 		dateAComparer.set(date.getAnnee(), date.getMois()-1, date.getJour());
 		return dateAComparer.compareTo(aujourdhui);
 	}
 	
 	public static int compareAAujourdhui(Date date, Heure heure) {
-		Calendar aujourdhui = GregorianCalendar.getInstance();
+		Calendar aujourdhui = calendrierAujourdhui();
 		aujourdhui.set(Calendar.SECOND, 0);
 		aujourdhui.set(Calendar.MILLISECOND, 0);
-		Calendar aComparer = GregorianCalendar.getInstance();
+		Calendar aComparer = calendrierAujourdhui();
 		aComparer.set(date.getAnnee(), date.getMois()-1, date.getJour(), heure.getHeure(), heure.getMinute(), 0);
 		aComparer.set(Calendar.MILLISECOND, 0);
 		return aComparer.compareTo(aujourdhui);
@@ -53,13 +58,13 @@ public class OutilDate {
 	}
 
 	public static Date dateAujourdhui() {
-		Calendar aujourdhui = GregorianCalendar.getInstance();
+		Calendar aujourdhui = calendrierAujourdhui();
 		Date dateAujourdhui = new Date(aujourdhui.get(Calendar.DAY_OF_MONTH), aujourdhui.get(Calendar.MONTH)+1, aujourdhui.get(Calendar.YEAR));
 		return dateAujourdhui;
 	}
 
 	public static Heure heureAujourdhui() {
-		Calendar aujourdhui = GregorianCalendar.getInstance();
+		Calendar aujourdhui = calendrierAujourdhui();
 		Heure heureAujourdhui = new Heure(aujourdhui.get(Calendar.HOUR_OF_DAY), aujourdhui.get(Calendar.MINUTE));
 		return heureAujourdhui;
 	}

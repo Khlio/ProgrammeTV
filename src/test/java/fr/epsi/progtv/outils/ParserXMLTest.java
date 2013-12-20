@@ -6,14 +6,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import fr.epsi.progtv.entrepots.Entrepots;
-import fr.epsi.progtv.outils.Constantes;
-import fr.epsi.progtv.outils.ParserXML;
 
 public class ParserXMLTest {
 	
 	@BeforeClass
 	public static void setUp() {
-		ParserXML.execute(Constantes.FICHIER_XML);
+		ParserXML.execute(ParserXMLTest.class.getClassLoader().getResource(Constantes.FICHIER_XML).getFile());
 	}
 	
 	@AfterClass

@@ -1,18 +1,27 @@
 package fr.epsi.progtv.services;
 
 import java.io.File;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Timer;
-import java.util.TimerTask;
 
+import org.quartz.CronScheduleBuilder;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
+
+import fr.epsi.progtv.JobProgrammeTV;
 import fr.epsi.progtv.outils.Constantes;
 import fr.epsi.progtv.outils.Decompresser;
+import fr.epsi.progtv.outils.ParserXML;
 import fr.epsi.progtv.outils.Telecharger;
 
 public class ServiceProgrammeTV {
 
 	private static ServiceProgrammeTV instance;
+	
+	private Scheduler ordonnanceur;
 	
 	private ServiceProgrammeTV() {
 	}
@@ -26,23 +35,32 @@ public class ServiceProgrammeTV {
 	
 	public void recupereLeProgrammeTNT() {
 		File fichierZIP = Telecharger.execute(Constantes.URL_ZIP);
-		Decompresser.execute(fichierZIP, Constantes.DOSSIER_RESOURCES, true);
+		File fichierXML = Decompresser.execute(fichierZIP, System.getProperty("user.home"), true).get(0);
+		ParserXML.execute(fichierXML.getAbsolutePath());
+		fichierXML.delete();
 	}
 	
 	public void executeTachePlanifiee() {
-		Timer t = new Timer();
-		Calendar instance = GregorianCalendar.getInstance();
-		instance.add(Calendar.DAY_OF_MONTH, 1);
-		instance.set(Calendar.HOUR_OF_DAY, 3);
-		instance.set(Calendar.MINUTE, 0);
-		instance.set(Calendar.SECOND, 0);
-		instance.set(Calendar.MILLISECOND, 0);
-		t.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				recupereLeProgrammeTNT();
+		JobDetail job = JobBuilder.newJob(JobProgrammeTV.class).build();
+		Trigger trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 0 3 * * ?")).build();
+		
+		try {
+			ordonnanceur = new StdSchedulerFactory().getScheduler();
+			ordonnanceur.start();
+			ordonnanceur.scheduleJob(job, trigger);
+		} catch (SchedulerException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void arreteTachePlanifiee() {
+		try {
+			if (null != ordonnanceur && ordonnanceur.isStarted()) {
+				ordonnanceur.shutdown(true);
 			}
-		}, instance.getTimeInMillis(), 24*3600*1000);
+		} catch (SchedulerException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

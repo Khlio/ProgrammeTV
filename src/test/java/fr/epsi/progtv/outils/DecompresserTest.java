@@ -20,7 +20,7 @@ public class DecompresserTest {
 	
 	private void testDecompression(boolean suppressionDuZIP) {
 		File fichierZIP = Telecharger.execute(Constantes.URL_ZIP);
-		List<File> lesFichiersDecompresses = Decompresser.execute(fichierZIP, Constantes.DOSSIER_RESOURCES_TEST, suppressionDuZIP);
+		List<File> lesFichiersDecompresses = Decompresser.execute(fichierZIP, System.getProperty("user.home")/*Constantes.DOSSIER_RESOURCES_TEST*/, suppressionDuZIP);
 		
 		Assert.assertNotNull(lesFichiersDecompresses);
 		Assert.assertEquals(1, lesFichiersDecompresses.size());
