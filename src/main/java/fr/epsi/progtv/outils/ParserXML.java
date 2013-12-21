@@ -1,6 +1,7 @@
 package fr.epsi.progtv.outils;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class ParserXML {
 	private ParserXML() {
 	}
 	
-	public static void execute(String fichierXML) {
+	public static void execute(InputStream fichierXML) {
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = null;
 		try {

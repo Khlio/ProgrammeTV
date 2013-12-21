@@ -1,29 +1,36 @@
 package fr.epsi.progtv.services;
 
-import java.io.File;
-
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import fr.epsi.progtv.outils.Constantes;
+import fr.epsi.progtv.entrepots.Entrepots;
 
 public class ServiceProgrammeTVTest {
 
-	private ServiceProgrammeTV service;
+	private static ServiceProgrammeTV service;
 	
-	@Before
-	public void setUp() {
+	@BeforeClass
+	public static  void setUp() {
 		service = ServiceProgrammeTV.getInstance();
+		service.recupereLeProgrammeTNT();
+	}
+	
+	@AfterClass
+	public static void tearDown() {
+		Entrepots.nettoie();
 	}
 	
 	@Test
 	public void testRecupereProgrammeTNT() {
-		service.recupereLeProgrammeTNT();
-		File fichierXML = new File(System.getProperty("user.home") + File.separator + Constantes.FICHIER_XML);
+		Assert.assertNotNull(Entrepots.chaines());
+		Assert.assertNotNull(Entrepots.chaines().get());
+		Assert.assertFalse(Entrepots.chaines().get().isEmpty());
 		
-		Assert.assertNotNull(fichierXML);
-		Assert.assertFalse(fichierXML.exists());
+		Assert.assertNotNull(Entrepots.programmes());
+		Assert.assertNotNull(Entrepots.programmes().get());
+		Assert.assertFalse(Entrepots.programmes().get().isEmpty());
 	}
 	
 }

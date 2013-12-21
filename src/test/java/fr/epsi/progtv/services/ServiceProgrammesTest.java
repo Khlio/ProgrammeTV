@@ -12,9 +12,7 @@ import fr.epsi.progtv.entrepots.Entrepots;
 import fr.epsi.progtv.modeles.Date;
 import fr.epsi.progtv.modeles.Heure;
 import fr.epsi.progtv.modeles.Programme;
-import fr.epsi.progtv.outils.Constantes;
 import fr.epsi.progtv.outils.OutilDate;
-import fr.epsi.progtv.outils.ParserXML;
 
 public class ServiceProgrammesTest {
 	
@@ -22,7 +20,7 @@ public class ServiceProgrammesTest {
 	
 	@BeforeClass
 	public static void setUp() {
-		ParserXML.execute(ServiceProgrammesTest.class.getClassLoader().getResource(Constantes.FICHIER_XML).getFile());
+		ServiceProgrammeTV.getInstance().recupereLeProgrammeTNT();
 		service = ServiceProgrammes.getInstance();
 	}
 	

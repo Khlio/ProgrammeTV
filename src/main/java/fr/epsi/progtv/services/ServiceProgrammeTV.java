@@ -1,6 +1,11 @@
 package fr.epsi.progtv.services;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
@@ -11,11 +16,10 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
+import de.schlichtherle.truezip.nio.file.TPath;
 import fr.epsi.progtv.JobProgrammeTV;
 import fr.epsi.progtv.outils.Constantes;
-import fr.epsi.progtv.outils.Decompresser;
 import fr.epsi.progtv.outils.ParserXML;
-import fr.epsi.progtv.outils.Telecharger;
 
 public class ServiceProgrammeTV {
 
@@ -34,10 +38,22 @@ public class ServiceProgrammeTV {
 	}
 	
 	public void recupereLeProgrammeTNT() {
-		File fichierZIP = Telecharger.execute(Constantes.URL_ZIP);
-		File fichierXML = Decompresser.execute(fichierZIP, System.getProperty("user.home"), true).get(0);
-		ParserXML.execute(fichierXML.getAbsolutePath());
-		fichierXML.delete();
+		InputStream fluxEntrant = null;
+		try {
+			Path chemin = new TPath(new URI(Constantes.URL_ZIP_XML));
+			fluxEntrant = Files.newInputStream(chemin);
+			ParserXML.execute(fluxEntrant);
+		} catch (URISyntaxException | IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (null != fluxEntrant) {
+					fluxEntrant.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void executeTachePlanifiee() {
