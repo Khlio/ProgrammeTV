@@ -6,7 +6,7 @@ $(document).ready(function() {
 		if(programme==undefined) document.location.href="index.html";
 		else{
 			var image = document.getElementById('imageProgramme');
-			image.src=(programme.icone!=undefined)?programme.icone:"img/defaut.jpg";
+			image.src=(programme.image!=undefined)?programme.image:"img/defaut.jpg";
 			image.title=programme.nom;
 			image.alt=programme.nom;
 			var description =(programme.description==undefined)?'Aucune description':programme.description;
@@ -27,7 +27,7 @@ function programmeSuivant(){
 	outils.ajaxRequest(outils.url+'/programmes/suivant/'+idProgramme,function(programme) {
 		if(programme!=undefined){
 			var image = document.getElementById('imageProgramme');
-			image.src=(programme.icone!=undefined)?programme.icone:"img/defaut.jpg";
+			image.src=(programme.image!=undefined)?programme.image:"img/defaut.jpg";
 			image.title=programme.nom;
 			image.alt=programme.nom;
 			var description =(programme.description==undefined)?'Aucune description':programme.description;
@@ -48,7 +48,7 @@ function programmePrecedent(){
 	outils.ajaxRequest(outils.url+'/programmes/precedent/'+idProgramme,function(programme) {
 		if(programme!=undefined){
 			var image = document.getElementById('imageProgramme');
-			image.src=(programme.icone!=undefined)?programme.icone:"img/defaut.jpg";
+			image.src=(programme.image!=undefined)?programme.image:"img/defaut.jpg";
 			image.title=programme.nom;
 			image.alt=programme.nom;
 			var description =(programme.description==undefined)?'Aucune description':programme.description;

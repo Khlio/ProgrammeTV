@@ -1,5 +1,5 @@
 body {
-	padding-top: 150px;
+	padding-top: 100px;
 	padding-bottom: 20px;
 }
 
@@ -21,4 +21,20 @@ body {
 .programmes {
 	border-bottom: solid 1px;
 	padding-bottom: 10px;
+}
+
+.selectionChaine {
+	padding-bottom: 30px;
+}
+
+.carousel .container {
+  background-color: white;
+}
+
+.carousel-control {
+  background-color: white;
+}
+
+.carousel .item {
+  background-color: white;
 }
