@@ -1,18 +1,17 @@
 package fr.epsi.progtv.services;
 
+import static org.junit.Assert.assertFalse;
+
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import fr.epsi.progtv.entrepots.Entrepots;
+import fr.epsi.progtv.domaine.Entrepots;
 
 public class ServiceProgrammeTVTest {
 
-	private static ServiceProgrammeTV service;
-	
 	@BeforeClass
-	public static  void setUp() {
+	public static void setUp() {
 		service = ServiceProgrammeTV.getInstance();
 		service.recupereLeProgrammeTNT();
 	}
@@ -23,14 +22,11 @@ public class ServiceProgrammeTVTest {
 	}
 	
 	@Test
-	public void testRecupereProgrammeTNT() {
-		Assert.assertNotNull(Entrepots.chaines());
-		Assert.assertNotNull(Entrepots.chaines().get());
-		Assert.assertFalse(Entrepots.chaines().get().isEmpty());
-		
-		Assert.assertNotNull(Entrepots.programmes());
-		Assert.assertNotNull(Entrepots.programmes().get());
-		Assert.assertFalse(Entrepots.programmes().get().isEmpty());
+	public void peutRecupererProgrammeTNT() {
+		assertFalse(Entrepots.chaines().get().isEmpty());
+		assertFalse(Entrepots.programmes().get().isEmpty());
 	}
+	
+	private static ServiceProgrammeTV service;
 	
 }

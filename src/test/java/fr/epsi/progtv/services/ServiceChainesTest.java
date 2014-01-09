@@ -1,23 +1,25 @@
 package fr.epsi.progtv.services;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.List;
 
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import fr.epsi.progtv.entrepots.Entrepots;
-import fr.epsi.progtv.modeles.Chaine;
+import fr.epsi.progtv.domaine.Entrepots;
+import fr.epsi.progtv.domaine.chaine.Chaine;
+import fr.epsi.progtv.outils.ParserXML;
 
 public class ServiceChainesTest {
 
-	private static ServiceChaines service;
-	
 	@BeforeClass
 	public static void setUp() {
-		ServiceProgrammeTV.getInstance().recupereLeProgrammeTNT();
+		ParserXML.execute(ServiceChainesTest.class.getClassLoader().getResourceAsStream("tnt_lite.xml"));
 		service = ServiceChaines.getInstance();
+		assertNotNull(service);
 	}
 	
 	@AfterClass
@@ -26,19 +28,39 @@ public class ServiceChainesTest {
 	}
 	
 	@Test
-	public void testTout() {
+	public void peutRecupererToutesLesChaines() {
 		List<Chaine> lesChaines = service.tout();
 		
-		Assert.assertNotNull(lesChaines);
-		Assert.assertEquals(19, lesChaines.size());
+		assertNotNull(lesChaines);
+		assertEquals(19, lesChaines.size());
 	}
 	
 	@Test
-	public void testDetailsDe() {
+	public void peutRecupererUneChaine() {
 		Chaine chaine = service.detailsDe(1);
 		
-		Assert.assertNotNull(chaine);
-		Assert.assertEquals("TF1", chaine.getNom());
+		assertNotNull(chaine);
+		assertEquals(1, chaine.getId().intValue());
+		assertEquals("TF1", chaine.getNom());
+		assertEquals(83, chaine.getProgrammes().size());
 	}
+	
+	@Test
+	public void peutRecupererLesDetailsDeLaChainePrecedente() {
+		Chaine chainePrecedente = service.detailsDeLaChainePrecedente(1);
+		
+		assertNotNull(chainePrecedente);
+		assertEquals(service.detailsDe(19), chainePrecedente);
+	}
+	
+	@Test
+	public void peutRecupererLesDetailsDeLaChaineSuivante() {
+		Chaine chaineSuivante = service.detailsDeLaChaineSuivante(19);
+		
+		assertNotNull(chaineSuivante);
+		assertEquals(service.detailsDe(1), chaineSuivante);
+	}
+	
+	private static ServiceChaines service;
 	
 }

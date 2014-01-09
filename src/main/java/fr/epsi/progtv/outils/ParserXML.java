@@ -11,14 +11,14 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.input.sax.XMLReaders;
 
-import fr.epsi.progtv.entrepots.EntrepotChaines;
-import fr.epsi.progtv.entrepots.EntrepotProgrammes;
-import fr.epsi.progtv.entrepots.Entrepots;
-import fr.epsi.progtv.modeles.Acteur;
-import fr.epsi.progtv.modeles.Chaine;
-import fr.epsi.progtv.modeles.Personne;
-import fr.epsi.progtv.modeles.Programme;
-import fr.epsi.progtv.modeles.Realisateur;
+import fr.epsi.progtv.domaine.Entrepots;
+import fr.epsi.progtv.domaine.chaine.Chaine;
+import fr.epsi.progtv.domaine.chaine.EntrepotChaines;
+import fr.epsi.progtv.domaine.programme.Acteur;
+import fr.epsi.progtv.domaine.programme.EntrepotProgrammes;
+import fr.epsi.progtv.domaine.programme.Personne;
+import fr.epsi.progtv.domaine.programme.Programme;
+import fr.epsi.progtv.domaine.programme.Realisateur;
 import fr.epsi.progtv.services.ServiceChaines;
 
 public class ParserXML {
@@ -36,13 +36,13 @@ public class ParserXML {
 		} catch (JDOMException | IOException e) {
 			e.printStackTrace();
 		}
+		Entrepots.nettoie();
 		chargerChaine(document);
 		chargerProgrammes(document);
 	}
 
 	private static void chargerChaine(Document document) {
 		EntrepotChaines entrepotChaines = Entrepots.chaines();
-		entrepotChaines.nettoie();
 		
 		List<Element> lesChaines = document.getRootElement().getChildren("channel");
 		for (Element laChaine : lesChaines) {
@@ -50,11 +50,11 @@ public class ParserXML {
 			String nom = laChaine.getChildText("display-name");
 			entrepotChaines.ajoute(new Chaine(id, nom));
 		}
+		entrepotChaines.trie();
 	}
 	
 	private static void chargerProgrammes(Document document) {
 		EntrepotProgrammes entrepotProgrammes = Entrepots.programmes();
-		entrepotProgrammes.nettoie();
 		ServiceChaines serviceChaines = ServiceChaines.getInstance();
 		
 		List<Element> lesProgrammes = document.getRootElement().getChildren("programme");
@@ -82,11 +82,12 @@ public class ParserXML {
 			String dateRealisation = leProgramme.getChildText("date");
 			String deuxiemeNom = leProgramme.getChildText("sub-title");
 			
-			Programme programme = chaine.ajouteProgramme(new Programme(nom, description, OutilDate.parseDate(dateDebut), OutilDate.parseDate(dateFin), 
+			Programme programme = chaine.ajouteUnProgramme(new Programme(nom, description, OutilDate.parseDate(dateDebut), OutilDate.parseDate(dateFin), 
 					OutilDate.parseHeure(dateDebut), OutilDate.parseHeure(dateFin), chaine, csa, categorie, acteurs, realisateur, image, 
 					dateRealisation, deuxiemeNom));
 			entrepotProgrammes.ajoute(programme);
 		}
+		entrepotProgrammes.trie();
 	}
 
 }

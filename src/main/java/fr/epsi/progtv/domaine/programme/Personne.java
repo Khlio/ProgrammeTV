@@ -1,4 +1,4 @@
-package fr.epsi.progtv.modeles;
+package fr.epsi.progtv.domaine.programme;
 
 import java.io.Serializable;
 
@@ -10,8 +10,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class Personne implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	
 	private String nomComplet;
 	
 	public Personne() {
@@ -34,5 +32,7 @@ public abstract class Personne implements Serializable {
 	public String toString() {
 		return getNomComplet();
 	}
+	
+	private static final long serialVersionUID = 1L;
 	
 }

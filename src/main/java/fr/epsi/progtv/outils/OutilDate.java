@@ -4,8 +4,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import fr.epsi.progtv.modeles.Date;
-import fr.epsi.progtv.modeles.Heure;
+import fr.epsi.progtv.domaine.programme.Date;
+import fr.epsi.progtv.domaine.programme.Heure;
 
 public class OutilDate {
 

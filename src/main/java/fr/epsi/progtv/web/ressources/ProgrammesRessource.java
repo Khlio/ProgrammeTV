@@ -1,4 +1,4 @@
-package fr.epsi.progtv.resources;
+package fr.epsi.progtv.web.ressources;
 
 import java.util.List;
 
@@ -7,15 +7,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import fr.epsi.progtv.modeles.Programme;
+import fr.epsi.progtv.domaine.programme.Programme;
 import fr.epsi.progtv.outils.Constantes;
 import fr.epsi.progtv.services.ServiceProgrammes;
 
 @Path("/programmes")
-public class ProgrammesResource {
+public class ProgrammesRessource {
 
-	private final ServiceProgrammes service = ServiceProgrammes.getInstance();
-	
 	@GET
 	@Produces(Constantes.ENTETE_HTTP)
 	public List<Programme> liste() {
@@ -84,5 +82,7 @@ public class ProgrammesResource {
 	public Programme detailsDuProgrammeSuivant(@PathParam("id") Integer idProgramme) {
 		return service.detailsDuProgrammeSuivant(idProgramme);
 	}
+	
+	private ServiceProgrammes service = ServiceProgrammes.getInstance();
 	
 }

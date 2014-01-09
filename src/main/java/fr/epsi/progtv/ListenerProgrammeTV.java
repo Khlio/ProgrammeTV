@@ -5,7 +5,7 @@ import javax.servlet.ServletContextListener;
 
 import fr.epsi.progtv.services.ServiceProgrammeTV;
 
-public class MonListener implements ServletContextListener {
+public class ListenerProgrammeTV implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {

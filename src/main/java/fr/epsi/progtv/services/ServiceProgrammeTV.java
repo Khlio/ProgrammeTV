@@ -23,10 +23,6 @@ import fr.epsi.progtv.outils.ParserXML;
 
 public class ServiceProgrammeTV {
 
-	private static ServiceProgrammeTV instance;
-	
-	private Scheduler ordonnanceur;
-	
 	private ServiceProgrammeTV() {
 	}
 	
@@ -78,5 +74,9 @@ public class ServiceProgrammeTV {
 			e.printStackTrace();
 		}
 	}
+	
+	private static ServiceProgrammeTV instance;
+	
+	private Scheduler ordonnanceur;
 	
 }

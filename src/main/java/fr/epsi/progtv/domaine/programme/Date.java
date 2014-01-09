@@ -1,6 +1,7 @@
-package fr.epsi.progtv.modeles;
+package fr.epsi.progtv.domaine.programme;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,13 +9,11 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
+import fr.epsi.progtv.outils.OutilDate;
+
 @XmlType
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Date implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-	
-	private static final String SEPARATEUR = "-";
+public class Date implements Serializable, Comparable<Date> {
 	
 	@XmlTransient
 	private Integer jour;
@@ -34,10 +33,6 @@ public class Date implements Serializable {
 		setMois(mois);
 		setAnnee(annee);
 		setAffichage();
-	}
-	
-	public String getAffichage() {
-		return affichage;
 	}
 	
 	public Integer getJour() {
@@ -64,13 +59,13 @@ public class Date implements Serializable {
 		this.annee = annee;
 	}
 
-	public void setAffichage() {
+	private void setAffichage() {
 		affichage = (10 > jour ? "0" : "") + jour + SEPARATEUR + (10 > mois ? "0" : "") + mois + SEPARATEUR + annee;
 	}
 	
 	@Override
 	public String toString() {
-		return getAffichage();
+		return affichage;
 	}
 	
 	@Override
@@ -80,9 +75,9 @@ public class Date implements Serializable {
 			egal = true;
 		} else if (unObjet instanceof Date) {
 			Date uneDate = (Date)unObjet;
-			if (jour.equals(uneDate.getJour()) 
-					&& mois.equals(uneDate.getMois())
-					&& annee.equals(uneDate.getAnnee())) {
+			if (getJour().equals(uneDate.getJour()) 
+					&& getMois().equals(uneDate.getMois())
+					&& getAnnee().equals(uneDate.getAnnee())) {
 				egal = true;
 			}
 		}
@@ -98,5 +93,21 @@ public class Date implements Serializable {
 		resultat = prime * resultat + ((null == getAnnee()) ? 0 : getAnnee().hashCode());
 		return resultat;
 	}
+	
+	@Override
+	public int compareTo(Date uneDate) {
+		Calendar cetteDate = OutilDate.calendrierAujourdhui();
+		cetteDate.set(getAnnee(), getMois()-1, getJour());
+		cetteDate.set(Calendar.SECOND, 0);
+		cetteDate.set(Calendar.MILLISECOND, 0);
+		Calendar dateAComparer = OutilDate.calendrierAujourdhui();
+		dateAComparer.set(uneDate.getAnnee(), uneDate.getMois()-1, uneDate.getJour());
+		dateAComparer.set(Calendar.SECOND, 0);
+		dateAComparer.set(Calendar.MILLISECOND, 0);
+		return cetteDate.compareTo(dateAComparer);
+	}
+	
+	private static final long serialVersionUID = 1L;
+	private static final String SEPARATEUR = "-";
 	
 }

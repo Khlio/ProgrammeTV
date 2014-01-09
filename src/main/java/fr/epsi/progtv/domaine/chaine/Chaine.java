@@ -1,6 +1,5 @@
-package fr.epsi.progtv.modeles;
+package fr.epsi.progtv.domaine.chaine;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +9,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import fr.epsi.progtv.domaine.Aggregat;
+import fr.epsi.progtv.domaine.programme.Programme;
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Chaine implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
+public class Chaine implements Aggregat, Comparable<Chaine> {
+
 	@XmlAttribute
 	private Integer id;
 	private String nom;
@@ -59,15 +59,15 @@ public class Chaine implements Serializable {
 		this.programmes = programmes;
 	}
 	
-	public Programme ajouteProgramme(Programme programme) {
+	public Programme ajouteUnProgramme(Programme programme) {
 		programme.setChaine(this);
 		programmes.add(programme);
 		return programme;
 	}
 	
-	public Programme supprimeProgramme(Programme programme) {
+	public Programme supprimeUnProgramme(Programme programme) {
 		programme.setChaine(null);
-		programmes.add(programme);
+		programmes.remove(programme);
 		return programme;
 	}
 
@@ -75,5 +75,12 @@ public class Chaine implements Serializable {
 	public String toString() {
 		return getNom();
 	}
+	
+	@Override
+	public int compareTo(Chaine uneChaine) {
+		return getId().compareTo(uneChaine.getId());
+	}
+	
+	private static final long serialVersionUID = 1L;
 	
 }

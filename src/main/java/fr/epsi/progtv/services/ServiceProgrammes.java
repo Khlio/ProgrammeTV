@@ -3,21 +3,16 @@ package fr.epsi.progtv.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.epsi.progtv.entrepots.EntrepotProgrammes;
-import fr.epsi.progtv.entrepots.Entrepots;
-import fr.epsi.progtv.modeles.Chaine;
-import fr.epsi.progtv.modeles.Date;
-import fr.epsi.progtv.modeles.Programme;
+import fr.epsi.progtv.domaine.Entrepots;
+import fr.epsi.progtv.domaine.chaine.Chaine;
+import fr.epsi.progtv.domaine.programme.Date;
+import fr.epsi.progtv.domaine.programme.EntrepotProgrammes;
+import fr.epsi.progtv.domaine.programme.Programme;
 import fr.epsi.progtv.outils.Constantes;
 import fr.epsi.progtv.outils.OutilDate;
 
 public class ServiceProgrammes {
 
-	private static ServiceProgrammes instance;
-	
-	private final EntrepotProgrammes programmes;
-	private final ServiceChaines serviceChaines;
-	
 	private ServiceProgrammes() {
 		programmes = Entrepots.programmes();
 		serviceChaines = ServiceChaines.getInstance();
@@ -134,6 +129,8 @@ public class ServiceProgrammes {
 		int positionDuProgramme = lesProgrammes.indexOf(leProgramme);
 		if (0 < positionDuProgramme) {
 			programmePrecedent = lesProgrammes.get(positionDuProgramme-1);
+		} else {
+			programmePrecedent = lesProgrammes.get(lesProgrammes.size()-1);
 		}
 		return programmePrecedent;
 	}
@@ -145,8 +142,15 @@ public class ServiceProgrammes {
 		int positionDuProgramme = lesProgrammes.indexOf(leProgramme);
 		if (lesProgrammes.size()-1 > positionDuProgramme) {
 			programmeSuivant = lesProgrammes.get(positionDuProgramme+1);
+		} else {
+			programmeSuivant = lesProgrammes.get(0);
 		}
 		return programmeSuivant;
 	}
+	
+	private static ServiceProgrammes instance;
+	
+	private EntrepotProgrammes programmes;
+	private ServiceChaines serviceChaines;
 
 }

@@ -1,11 +1,11 @@
-package fr.epsi.progtv.modeles;
+package fr.epsi.progtv.domaine.programme;
 
 public class Acteur extends Personne {
-
-	private static final long serialVersionUID = 1L;
 
 	public Acteur(String nomComplet) {
 		super(nomComplet);
 	}
+	
+	private static final long serialVersionUID = 1L;
 	
 }

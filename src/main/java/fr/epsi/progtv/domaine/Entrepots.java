@@ -1,8 +1,9 @@
-package fr.epsi.progtv.entrepots;
+package fr.epsi.progtv.domaine;
+
+import fr.epsi.progtv.domaine.chaine.EntrepotChaines;
+import fr.epsi.progtv.domaine.programme.EntrepotProgrammes;
 
 public class Entrepots {
-	
-	private static Entrepots instance = new Entrepots();
 	
 	private Entrepots() {
 	}
@@ -27,5 +28,7 @@ public class Entrepots {
 	private EntrepotProgrammes entrepotProgrammes() {
 		return EntrepotProgrammes.getInstance();
 	}
+	
+	private static Entrepots instance = new Entrepots();
 
 }

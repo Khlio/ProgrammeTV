@@ -1,6 +1,5 @@
-package fr.epsi.progtv.modeles;
+package fr.epsi.progtv.domaine.programme;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -9,17 +8,15 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import fr.epsi.progtv.domaine.Aggregat;
+import fr.epsi.progtv.domaine.chaine.Chaine;
 import fr.epsi.progtv.outils.OutilDate;
 
 @XmlRootElement
 @XmlType(propOrder={"id", "nom", "description", "dateDebut", "dateFin", "heureDebut", "heureFin", 
 		"chaine", "csa", "categorie", "acteurs", "realisateur", "image", "dateRealisation", "deuxiemeNom", "duree"})
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Programme implements Serializable {
-	
-	private static final long serialVersionUID = 4512555169699413723L;
-	
-	private static Integer idCourant = 1;
+public class Programme implements Aggregat, Comparable<Programme> {
 	
 	@XmlAttribute
 	private Integer id;
@@ -75,14 +72,11 @@ public class Programme implements Serializable {
 		idCourant = 1;
 	}
 	
-	public static Integer decrementeId() {
-		return idCourant--;
-	}
-	
-	public static Integer incrementeId() {
+	private static Integer incrementeId() {
 		return idCourant++;
 	}
 
+	@Override
 	public Integer getId() {
 		return id;
 	}
@@ -108,6 +102,9 @@ public class Programme implements Serializable {
 	}
 
 	public Date getDateDebut() {
+		if (null == dateDebut) {
+			dateDebut = new Date();
+		}
 		return dateDebut;
 	}
 
@@ -116,6 +113,9 @@ public class Programme implements Serializable {
 	}
 
 	public Date getDateFin() {
+		if (null == dateFin) {
+			dateFin = new Date();
+		}
 		return dateFin;
 	}
 
@@ -124,6 +124,9 @@ public class Programme implements Serializable {
 	}
 
 	public Heure getHeureDebut() {
+		if (null == heureDebut) {
+			heureDebut = new Heure();
+		}
 		return heureDebut;
 	}
 
@@ -132,6 +135,9 @@ public class Programme implements Serializable {
 	}
 
 	public Heure getHeureFin() {
+		if (null == heureFin) {
+			heureFin = new Heure();
+		}
 		return heureFin;
 	}
 
@@ -229,5 +235,18 @@ public class Programme implements Serializable {
 	public String toString() {
 		return getNom();
 	}
+	
+	@Override
+	public int compareTo(Programme unProgramme) {
+		int compare = getDateDebut().compareTo(unProgramme.getDateDebut());
+		if (0 == compare) {
+			compare = getHeureDebut().compareTo(unProgramme.getHeureDebut());
+		}
+		return compare;
+	}
+	
+	private static final long serialVersionUID = 1L;
+	
+	private static Integer idCourant = 1;
 	
 }
