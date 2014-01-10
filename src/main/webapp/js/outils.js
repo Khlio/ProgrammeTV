@@ -1,5 +1,5 @@
 var outils = {
-	url:'rest',
+	url:'http://programmetv.mope.eu.cloudbees.net/rest',
     ajaxRequest: function(url, callback) {
         $.ajax({
             type: "GET",

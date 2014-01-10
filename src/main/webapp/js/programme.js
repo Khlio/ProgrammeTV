@@ -1,65 +1,58 @@
 $(document).ready(function() {
 	var url = window.location.search;
 	var idProgramme = url.substring(url.lastIndexOf("=")+1);
+	var dateDuProgramme='';
 	
-	outils.ajaxRequest(outils.url+'/programmes/'+idProgramme,function(programme) {
+	$('.carousel').carousel({
+		interval: false
+	});
+	
+	$('.carousel-inner').swipe({
+		swipeLeft: function(event, direction, distance, duration, fingerCount) {
+			$(this).parent().carousel('next'); 
+		},
+		swipeRight: function(event, direction, distance, duration, fingerCount) {
+			$(this).parent().carousel('prev');
+		},
+		treshold:0
+	});
+	
+	outils.ajaxRequest(outils.url+'/programmes/'+idProgramme,function(programme){
 		if(programme==undefined) document.location.href="index.html";
 		else{
-			var image = document.getElementById('imageProgramme');
-			image.src=(programme.image!=undefined)?programme.image:"img/defaut.jpg";
-			image.title=programme.nom;
-			image.alt=programme.nom;
-			var description =(programme.description==undefined)?'Aucune description':programme.description;
-			document.getElementById('informationsProgramme').setAttribute('idProgramme',programme["@id"]);
-			$('#informationsProgramme').html(
-				'<h3>'+programme.nom+'</h3>'+
-				'<p>'+programme.heureDebut+' - '+programme.heureFin+'</p>'+
-				'<p>'+programme.categorie+'</p>'+
-				'<p>Programme pour : '+programme.csa+'</p>'+
-				'<p>'+description+'</p>'
-			);
+			var elements = programme.dateDebut.split('-');
+			dateDuProgramme=elements[2]+elements[1]+elements[0];
+			outils.ajaxRequest(outils.url+'/programmes/chaine/'+programme.chaine["@id"]+'/'+dateDuProgramme,function(json) {
+				if(json==undefined) document.location.href="index.html";
+				else{
+					var programmes=json.programme;					
+					var acteurs='';
+					for(var i=0;i<programmes.length;i++){
+						if(programmes[i].acteurs!=undefined){
+							acteurs='<p>Avec ';
+							for(var a=0; a<programmes[i].acteurs.length; a++){
+								acteurs+=programmes[i].acteurs[a].nomComplet+(a+1==programmes[i].acteurs.length?'':', ');
+							}
+						}
+						acteurs+='</p>';
+						var description =(programmes[i].description==undefined)?'Aucune description':programmes[i].description;
+						$('.carousel-inner').append(
+							'<div class="item'+(programmes[i]["@id"]==idProgramme?' active"':'"')+' id="'+programmes[i]["@id"]+'">'+
+								'<img src="'+(programmes[i].image!=undefined?programmes[i].image:"img/defaut.jpg")+'" title="'+programmes[i].nom+'" alt="'+programmes[i].nom+'">'+
+								'<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">'+
+									'<h3>'+programmes[i].nom+'</h3>'+
+									(programmes[i].deuxiemeNom!=undefined?'<h5>'+programmes[i].deuxiemeNom+'</h5>':'')+
+									'<p>'+programmes[i].heureDebut+' - '+programmes[i].heureFin+' ('+programmes[i].duree+' min) le '+programmes[i].dateDebut+'</p>'+
+									'<p>'+programmes[i].categorie+' pour : '+programmes[i].csa+' sur <a href="chaine.html?id='+programmes[i].chaine["@id"]+'">'+programmes[i].chaine.nom+'</a></p>'+
+									'<p>Réalisé le '+programmes[i].dateRealisation+(programmes[i].realisateur!=undefined?' par '+programmes[i].realisateur.nomComplet:'')+'</p>'+
+									acteurs+
+									'<p>'+description+'</p>'+						
+								'</div>'+
+							'</div>'
+						);
+					}
+				}
+			});
 		}
 	});
 });
-
-function programmeSuivant(){
-	var idProgramme=document.getElementById('informationsProgramme').getAttribute('idProgramme');
-	outils.ajaxRequest(outils.url+'/programmes/suivant/'+idProgramme,function(programme) {
-		if(programme!=undefined){
-			var image = document.getElementById('imageProgramme');
-			image.src=(programme.image!=undefined)?programme.image:"img/defaut.jpg";
-			image.title=programme.nom;
-			image.alt=programme.nom;
-			var description =(programme.description==undefined)?'Aucune description':programme.description;
-			document.getElementById('informationsProgramme').setAttribute('idProgramme',programme["@id"]);
-			$('#informationsProgramme').html(
-				'<h3>'+programme.nom+'</h3>'+
-				'<p>'+programme.heureDebut+' - '+programme.heureFin+'</p>'+
-				'<p>'+programme.categorie+'</p>'+
-				'<p>Programme pour : '+programme.csa+'</p>'+
-				'<p>'+description+'</p>'
-			);
-		}
-	});
-}
-
-function programmePrecedent(){
-	var idProgramme=document.getElementById('informationsProgramme').getAttribute('idProgramme');
-	outils.ajaxRequest(outils.url+'/programmes/precedent/'+idProgramme,function(programme) {
-		if(programme!=undefined){
-			var image = document.getElementById('imageProgramme');
-			image.src=(programme.image!=undefined)?programme.image:"img/defaut.jpg";
-			image.title=programme.nom;
-			image.alt=programme.nom;
-			var description =(programme.description==undefined)?'Aucune description':programme.description;
-			document.getElementById('informationsProgramme').setAttribute('idProgramme',programme["@id"]);
-			$('#informationsProgramme').html(
-				'<h3>'+programme.nom+'</h3>'+
-				'<p>'+programme.heureDebut+' - '+programme.heureFin+'</p>'+
-				'<p>'+programme.categorie+'</p>'+
-				'<p>Programme pour : '+programme.csa+'</p>'+
-				'<p>'+description+'</p>'
-			);
-		}
-	});
-}

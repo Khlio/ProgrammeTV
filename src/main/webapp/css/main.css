@@ -1,6 +1,10 @@
+html {
+  height: 100%;
+}
+
 body {
 	padding-top: 100px;
-	padding-bottom: 20px;
+	height: 100%;
 }
 
 .media {
@@ -18,9 +22,53 @@ body {
 	color:black;
 }
 
-.programmes {
-	border-bottom: solid 1px;
+.programmes {	
 	padding-bottom: 10px;
+	padding-left: 8%;
+}
+
+.ligneProgrammes {
+	max-width: 83%;
+	margin-left: auto;
+	margin-right: auto;
+	border-bottom: solid 1px;
+}
+.ligne {
+	width: 100%;
+	border-bottom: solid 1px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.apropos {
+	text-align: center;
+}
+
+#carousel-chaine {
+	padding-top: 30px;
+}
+
+#programme {
+	height: 100%;
+}
+
+#carousel-programme {
+	height: 105%;
+	padding-top: 2%;
+}
+
+#carousel-programme .carousel-inner img{
+	margin: auto;
+}
+#carousel-programme .carousel-inner h5{
+	text-align: center;
+}
+#carousel-programme .carousel-inner h3{
+	text-align: center;
 }
 
 .selectionChaine {
@@ -33,6 +81,7 @@ body {
 
 .carousel-control {
   background-color: white;
+  width: 8%;
 }
 
 .carousel .item {

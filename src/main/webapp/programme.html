@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
     </head>
-    <body>
+    <body style="padding-top: 51px">
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
@@ -33,26 +33,34 @@
 							<ul class="dropdown-menu" id="selectionChaine">
 							</ul>
 						</li>
-						<li><a href="#about">A propos</a></li>
-						<li><a href="#contact">Contact</a></li>
+						<li><a href="apropos.html">A propos</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 
-		<div class="container">
-			<div class="row">
-				<a class="col-lg-1 col-md-1 col-sm-1 col-xs-1" href="javascript:;" onclick="programmePrecedent()" title="Programme pr&eacute;c&eacute;dent">&lt;&lt;</a>
-				<a class="col-lg-1 col-lg-offset-10 col-md-1 col-md-offset-10 col-sm-1 col-sm-offset-10 col-xs-1 col-xs-offset-10" align="right" href="javascript:;" onclick="programmeSuivant()" title="Programme suivant">&gt;&gt;</a>
+		<div id="programme">
+			<div id="carousel-programme" class="carousel slide">
+			
+				<!-- Wrapper for slides -->
+				<div class="carousel-inner">
+				</div>
+
+				<!-- Controls -->
+				<a class="left carousel-control" href="#carousel-programme" data-slide="prev">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+				</a>
+				<a class="right carousel-control" href="#carousel-programme" data-slide="next">
+					<span class="glyphicon glyphicon-chevron-right"></span>
+				</a>
 			</div>
-			<img id="imageProgramme" class="media-object img-responsive col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4">
-			<div id="informationsProgramme" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1"></div>
 		</div>
     </body>
 	
 	<script src="js/lib/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 	<script src="js/lib/jquery-2.0.3.min.js"></script>
-	<script src="js/lib/bootstrap.min.js"></script>
+	<script src="js/lib/bootstrap.min.js"></script>	
+	<script src="js/lib/jquery.touchSwipe.min.js"></script>
 	<script src="js/outils.js"></script>
 	<script src="js/programme.js"></script>
 </html>

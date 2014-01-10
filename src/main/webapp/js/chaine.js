@@ -3,110 +3,98 @@ $(document).ready(function() {
 		interval: false
 	});
 	
+	$('.carousel-inner').swipe({
+		swipeLeft: function(event, direction, distance, duration, fingerCount) {
+			$(this).parent().carousel('next'); 
+		},
+		swipeRight: function(event, direction, distance, duration, fingerCount) {
+			$(this).parent().carousel('prev');
+		},
+		treshold:0
+	});
+	
 	var url = window.location.search;
 	var idChaine = url.substring(url.lastIndexOf("=")+1);
 	idChaine=parseInt(idChaine);
 	
-	var annee = new Date().getFullYear();
-	
-	var mois = new Date().getMonth()+1;
-	mois=(mois<10)?'0'+mois:mois;
-	
-	var jour = new Date().getDate();
-	
-	var dateDuJour =0;
-	var jourDebut=0;
-	var jourFin=0;
+	var aujourdhui = new Date();
+	var dateDuJour = dateFormatee(aujourdhui);
 	var jourFr='';
+	var moisFr='';
 	
-	var moisFr=moisEnFrancais(new Date().getMonth());
+	var date=new Date(aujourdhui.getFullYear(),aujourdhui.getMonth(),aujourdhui.getDate()-1);
 	
-	if(jour<=15){
-		jourDebut=1;
-		jourFin=15;
-	}
-	else{
-		jourDebut=16;
-		jourFin=jourDansLeMois(new Date().getMonth(),annee);
-	}
-	
-	var jourDeLaSemaine=new Date(annee, new Date().getMonth(), jourDebut).getDay();
-	for(var i=jourDebut;i<=jourFin;i++){
-		if(i==jour) dateDuJour=annee+''+mois+''+((jour<10)?'0'+jour:jour);
-		jourFr=jourEnFrancais(jourDeLaSemaine);
+	for(var i=0;i<9;i++){
+		jourFr=jourEnFrancais(date.getDay());
+		moisFr=moisEnFrancais(date.getMonth());
 		$('#date').append(
-			'<option value="'+annee+''+mois+''+((i<10)?'0'+i:i)+'" '+((i==jour)?'selected':'')+'>'+jourFr+' '+i+' '+moisFr
+			'<option value="'+dateFormatee(date)+'" '+((date.getDate()== aujourdhui.getDate())?'selected':'')+'>'+jourFr+' '+date.getDate()+' '+moisFr
 		);
-		jourDeLaSemaine++;
-		if(jourDeLaSemaine==7) jourDeLaSemaine=0;
+		date.setDate(date.getDate()+1);
 	}
-	
 	
 	outils.ajaxRequest(outils.url+'/chaines',function(json){
 		if(json==undefined) document.location.href="index.html";
 		else{
 			var chaines=json.chaine;
-			var baliseOuvrante ='';
+			var description='';
+			var programmes;
+			var lesProgrammes;
 			for(var i=0;i<chaines.length;i++){
-				baliseOuvrante='<div class="item'+((chaines[i]["@id"]==idChaine)?' active"':'"')+' id="'+chaines[i]["@id"]+'" align="center">';
 				$('.carousel-inner').append(
-					baliseOuvrante+
-						'<img src="img/carousel/'+chaines[i]["@id"]+'.gif" title="'+chaines[i].nom+'" alt="'+chaines[i].nom+'">'+
+					'<div class="item'+(chaines[i]["@id"]==idChaine?' active"':'"')+' id="'+chaines[i]["@id"]+'" align="center">'+
+						'<img src="img/carousel/'+chaines[i]["@id"]+'.gif" title="'+chaines[i].nom+'" alt="'+chaines[i].nom+'">'+									
 					'</div>'
 				);
+				affichageProgrammes(chaines[i]["@id"],dateDuJour);
 			}
 		}
-	});
-	
-	affichageProgrammes(idChaine,dateDuJour);
-	
-	
-	$(".carousel-control.left").click(function(){
-		$('.programmes').remove();
-		var slidePrecedente = $('div.active').index()-1;
-		if(slidePrecedente<0) slidePrecedente=$('.item').length-1;
-		$('#carousel-chaine').carousel(slidePrecedente);
-		idChaine=(slidePrecedente==$('.item').length-1)?$('div.next').attr('id'):$('div.prev').attr('id');
-		affichageProgrammes(idChaine,dateDuJour);
-		return false;   
-	});
-	
-	$(".carousel-control.right").click(function(){
-		$('.programmes').remove();
-		var slideSuivante = $('div.active').index()+1;
-		if(slideSuivante>=$('.item').length) slideSuivante=0;
-		$('#carousel-chaine').carousel(slideSuivante);
-		idChaine=(slideSuivante==0)?$('div.prev').attr('id'):$('div.next').attr('id');
-		affichageProgrammes(idChaine,dateDuJour);
-		return false;   
 	});
 	
 	$("#date").change(function(){
 		var listeDate= document.getElementById('date');
 		dateDuJour=listeDate.options[listeDate.selectedIndex].value;
-		$('.programmes').remove();
-		affichageProgrammes(idChaine,dateDuJour);
+		$('.ligneProgrammes').remove();
+		outils.ajaxRequest(outils.url+'/chaines',function(json){
+			if(json!=undefined){
+				var chaines=json.chaine;
+				for(var i=0;i<chaines.length;i++){
+					affichageProgrammes(chaines[i]["@id"],dateDuJour);
+				}
+			}
+		});
 	});
 });
 
-function affichageProgrammes(idChaine,dateDuJour) {
-	outils.ajaxRequest(outils.url+'/programmes/chaine/'+idChaine+'/'+dateDuJour,function(json) {
-		if(json==undefined) document.location.href="index.html";
-		else{
-			var programmes=json.programme;
-			
-			for(var i=0;i<programmes.length;i++){			
-				description=(programmes[i].description==undefined)?'Aucune description':programmes[i].description.substr(0, 64)+"...";
-				$('#'+idChaine).append(
-					'<div class="programmes col-lg-6 col-md-6 col-sm-6">'+
-						'<a href="programme.html?id='+programmes[i]["@id"]+'"><h4>'+programmes[i].nom+'</h4></a>'+
-						'<p>'+programmes[i].heureDebut+' - '+programmes[i].categorie+'</p>'+
-						'<p class="hidden-xs hidden-sm">'+description+'</p>'+
-					'</div>'
-				);
-			}
+function ajouterLigneProgrammes(idChaine,programmes){
+	var ligneProgramme='<div class="ligneProgrammes row">';
+	var description='';
+	for(var i=0;i<programmes.length;i++){
+		if(programmes[i]!='null'){
+			description=(programmes[i].description==undefined)?'Aucune description':programmes[i].description.substr(0, 64)+"...";
+			ligneProgramme+='<div class="programmes col-lg-6 col-md-6 col-sm-6">'+
+				'<a href="programme.html?id='+programmes[i]["@id"]+'"><h4>'+programmes[i].nom+'</h4></a>'+
+				'<p>'+programmes[i].heureDebut+' - '+programmes[i].categorie+'</p>'+
+				'<p class="hidden-xs hidden-sm">'+description+'</p>'+
+			'</div>'+
+			(i==0?'<span class="visible-xs ligne"></span>':'');
 		}
-	});
+	}
+	ligneProgramme+='</div>';							
+	$('#'+idChaine).append(ligneProgramme);
+}
+
+function affichageProgrammes(idChaine,dateDuJour){
+	outils.ajaxRequest(outils.url+'/programmes/chaine/'+idChaine+'/'+dateDuJour,function(json) {
+	if(json!=undefined){
+		programmes=json.programme;						
+		for(var a=0;a<programmes.length;a++){				
+			lesProgrammes = [programmes[a],(a+1==programmes.length?'null':programmes[a+1])];
+			ajouterLigneProgrammes(idChaine,lesProgrammes);
+			a++;
+		}
+	}
+});
 }
 
 function jourDansLeMois(mois,annee) {
@@ -184,4 +172,10 @@ function moisEnFrancais(mois){
 		
 	};
 	return moisFrancais;
+}
+
+function dateFormatee(date){
+	return date.getFullYear()
+		+(date.getMonth()<10?'0'+(date.getMonth()+1):date.getMonth()+1)
+		+(date.getDate()<10?'0'+date.getDate():date.getDate());
 }
