@@ -17,7 +17,7 @@ body {
 	border-bottom: solid 1px;
 }
 
-.chaine a{
+.chaine a {
 	text-decoration:none;
 	color:black;
 }
@@ -33,6 +33,7 @@ body {
 	margin-right: auto;
 	border-bottom: solid 1px;
 }
+
 .ligne {
 	width: 100%;
 	border-bottom: solid 1px;
@@ -57,17 +58,19 @@ body {
 }
 
 #carousel-programme {
-	height: 105%;
+	height: 100%;
 	padding-top: 2%;
 }
 
-#carousel-programme .carousel-inner img{
+#carousel-programme .carousel-inner img {
 	margin: auto;
 }
-#carousel-programme .carousel-inner h5{
+
+#carousel-programme .carousel-inner h5 {
 	text-align: center;
 }
-#carousel-programme .carousel-inner h3{
+
+#carousel-programme .carousel-inner h3 {
 	text-align: center;
 }
 
@@ -80,7 +83,6 @@ body {
 }
 
 .carousel-control {
-  background-color: white;
   width: 8%;
 }
 

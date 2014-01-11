@@ -38,13 +38,13 @@ $(document).ready(function() {
 						var description =(programmes[i].description==undefined)?'Aucune description':programmes[i].description;
 						$('.carousel-inner').append(
 							'<div class="item'+(programmes[i]["@id"]==idProgramme?' active"':'"')+' id="'+programmes[i]["@id"]+'">'+
-								'<img src="'+(programmes[i].image!=undefined?programmes[i].image:"img/defaut.jpg")+'" title="'+programmes[i].nom+'" alt="'+programmes[i].nom+'">'+
+								'<img class="img-responsive" src="'+(programmes[i].image!=undefined?programmes[i].image:"img/defaut.jpg")+'" title="'+programmes[i].nom+'" alt="'+programmes[i].nom+'">'+
 								'<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">'+
 									'<h3>'+programmes[i].nom+'</h3>'+
 									(programmes[i].deuxiemeNom!=undefined?'<h5>'+programmes[i].deuxiemeNom+'</h5>':'')+
 									'<p>'+programmes[i].heureDebut+' - '+programmes[i].heureFin+' ('+programmes[i].duree+' min) le '+programmes[i].dateDebut+'</p>'+
 									'<p>'+programmes[i].categorie+' pour : '+programmes[i].csa+' sur <a href="chaine.html?id='+programmes[i].chaine["@id"]+'">'+programmes[i].chaine.nom+'</a></p>'+
-									'<p>Réalisé le '+programmes[i].dateRealisation+(programmes[i].realisateur!=undefined?' par '+programmes[i].realisateur.nomComplet:'')+'</p>'+
+									'<p>R&eacute;alis&eacute; le '+programmes[i].dateRealisation+(programmes[i].realisateur!=undefined?' par '+programmes[i].realisateur.nomComplet:'')+'</p>'+
 									acteurs+
 									'<p>'+description+'</p>'+						
 								'</div>'+
