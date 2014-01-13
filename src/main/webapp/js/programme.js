@@ -1,4 +1,4 @@
-$(document).ready(function() {
+﻿$(document).ready(function() {
 	var url = window.location.search;
 	var idProgramme = url.substring(url.lastIndexOf("=")+1);
 	var dateDuProgramme='';
@@ -42,9 +42,11 @@ $(document).ready(function() {
 								'<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">'+
 									'<h3>'+programmes[i].nom+'</h3>'+
 									(programmes[i].deuxiemeNom!=undefined?'<h5>'+programmes[i].deuxiemeNom+'</h5>':'')+
-									'<p>'+programmes[i].heureDebut+' - '+programmes[i].heureFin+' ('+programmes[i].duree+' min) le '+programmes[i].dateDebut+'</p>'+
-									'<p>'+programmes[i].categorie+' pour : '+programmes[i].csa+' sur <a href="chaine.html?id='+programmes[i].chaine["@id"]+'">'+programmes[i].chaine.nom+'</a></p>'+
-									'<p>R&eacute;alis&eacute; le '+programmes[i].dateRealisation+(programmes[i].realisateur!=undefined?' par '+programmes[i].realisateur.nomComplet:'')+'</p>'+
+									'<p>'+programmes[i].heureDebut+' - '+programmes[i].heureFin+' ('+programmes[i].duree+' min) le '+programmes[i].dateDebut+' sur <a href="chaine.html?id='+programmes[i].chaine["@id"]+'">'+programmes[i].chaine.nom+'</a></p>'+
+									'<p>Genre : '+programmes[i].categorie+'</p>'+
+									'<p>Public : '+programmes[i].csa+'</p>'+
+									(programmes[i].dateRealisation!=undefined?'<p>Date de réalisation : '+programmes[i].dateRealisation+'</p>':'')+
+									(programmes[i].realisateur!=undefined?'<p>Réalisateur : '+programmes[i].realisateur.nomComplet+'</p>':'')+
 									acteurs+
 									'<p>'+description+'</p>'+						
 								'</div>'+
