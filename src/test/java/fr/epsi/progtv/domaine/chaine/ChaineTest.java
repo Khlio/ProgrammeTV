@@ -1,9 +1,6 @@
 package fr.epsi.progtv.domaine.chaine;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.fest.assertions.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -15,15 +12,15 @@ public class ChaineTest {
 	public void peutDonnerUnIdentifiant() {
 		Chaine chaine = new Chaine();
 		
-		assertNotNull(chaine);
-		assertEquals(Integer.valueOf(0), chaine.getId());
+		assertThat(chaine).isNotNull();
+		assertThat(chaine.getId()).isEqualTo(0);
 	}
 	
 	@Test
 	public void peutDonnerUnNom() {
 		Chaine chaine = new Chaine("test");
 		
-		assertEquals("test", chaine.getNom());
+		assertThat(chaine.getNom()).isEqualTo("test");
 	}
 	
 	@Test
@@ -31,11 +28,11 @@ public class ChaineTest {
 		Chaine chaine = new Chaine();
 		Programme programmeAjoute = chaine.ajouteUnProgramme(new Programme("test"));
 		
-		assertNotNull(programmeAjoute);
-		assertEquals("test", programmeAjoute.getNom());
-		assertEquals(chaine, programmeAjoute.getChaine());
-		assertNotNull(chaine.getProgrammes());
-		assertEquals(1, chaine.getProgrammes().size());
+		assertThat(programmeAjoute).isNotNull();
+		assertThat(programmeAjoute.getNom()).isEqualTo("test");
+		assertThat(programmeAjoute.getChaine()).isEqualTo(chaine);
+		assertThat(chaine.getProgrammes()).isNotNull();
+		assertThat(chaine.getProgrammes()).hasSize(1);
 	}
 	
 	@Test
@@ -44,18 +41,18 @@ public class ChaineTest {
 		Programme programme = chaine.ajouteUnProgramme(new Programme("test"));
 		Programme programmeSupprime = chaine.supprimeUnProgramme(programme);
 		
-		assertNotNull(programmeSupprime);
-		assertEquals("test", programmeSupprime.getNom());
-		assertNull(programmeSupprime.getChaine());
-		assertNotNull(chaine.getProgrammes());
-		assertTrue(chaine.getProgrammes().isEmpty());
+		assertThat(programmeSupprime).isNotNull();
+		assertThat(programmeSupprime.getNom()).isEqualTo("test");
+		assertThat(programmeSupprime.getChaine()).isNull();
+		assertThat(chaine.getProgrammes()).isNotNull();
+		assertThat(chaine.getProgrammes()).isEmpty();
 	}
 	
 	@Test
 	public void peutAfficherUneChaine() {
 		Chaine chaine = new Chaine("test");
 		
-		assertEquals("test", chaine.toString());
+		assertThat(chaine.toString()).isEqualTo("test");
 	}
 	
 	@Test
@@ -63,7 +60,7 @@ public class ChaineTest {
 		Chaine chaine = new Chaine(19, "19");
 		Chaine chainePrecedente = new Chaine(1, "1");
 		
-		assertEquals(1, chaine.compareTo(chainePrecedente));
+		assertThat(chaine.compareTo(chainePrecedente)).isEqualTo(1);
 	}
 	
 	@Test
@@ -71,7 +68,7 @@ public class ChaineTest {
 		Chaine chaine = new Chaine(1, "1");
 		Chaine chaineSuivante = new Chaine(19, "19");
 		
-		assertEquals(-1, chaine.compareTo(chaineSuivante));
+		assertThat(chaine.compareTo(chaineSuivante)).isEqualTo(-1);
 	}
 	
 	@Test
@@ -79,7 +76,7 @@ public class ChaineTest {
 		Chaine chaine = new Chaine(9, "9");
 		Chaine chaineIdentique = new Chaine(9, "9");
 		
-		assertEquals(0, chaine.compareTo(chaineIdentique));
+		assertThat(chaine.compareTo(chaineIdentique)).isEqualTo(0);
 	}
 	
 }

@@ -1,6 +1,6 @@
 package fr.epsi.progtv.services;
 
-import static org.junit.Assert.assertFalse;
+import static org.fest.assertions.Assertions.assertThat;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -23,8 +23,8 @@ public class ServiceProgrammeTVTest {
 	
 	@Test
 	public void peutRecupererProgrammeTNT() {
-		assertFalse(Entrepots.chaines().get().isEmpty());
-		assertFalse(Entrepots.programmes().get().isEmpty());
+		assertThat(Entrepots.chaines().get()).isNotEmpty();
+		assertThat(Entrepots.programmes().get()).isNotEmpty();
 	}
 	
 	private static ServiceProgrammeTV service;

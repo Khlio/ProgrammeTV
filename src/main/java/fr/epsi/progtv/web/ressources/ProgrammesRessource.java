@@ -44,7 +44,7 @@ public class ProgrammesRessource {
 	@GET
 	@Path("/moment")
 	@Produces(Constantes.ENTETE_HTTP)
-	public List<Programme> programmesDuMomentDeLaChaine() {
+	public List<Programme> programmesDuMoment() {
 		return service.programmesDuMoment();
 	}
 	

@@ -3,7 +3,6 @@ package fr.epsi.progtv.services;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -26,11 +25,12 @@ public class ServiceProgrammeTV {
 	private ServiceProgrammeTV() {
 	}
 	
+	private static class ServiceProgrammeTVHolder {
+		private static final ServiceProgrammeTV INSTANCE = new ServiceProgrammeTV();
+	}
+	
 	public static ServiceProgrammeTV getInstance() {
-		if (null == instance) {
-			instance = new ServiceProgrammeTV();
-		}
-		return instance;
+		return ServiceProgrammeTVHolder.INSTANCE;
 	}
 	
 	public void recupereLeProgrammeTNT() {
@@ -39,7 +39,7 @@ public class ServiceProgrammeTV {
 			Path chemin = new TPath(new URI(Constantes.URL_ZIP_XML));
 			fluxEntrant = Files.newInputStream(chemin);
 			ParserXML.execute(fluxEntrant);
-		} catch (URISyntaxException | IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
@@ -54,7 +54,7 @@ public class ServiceProgrammeTV {
 	
 	public void executeTachePlanifiee() {
 		JobDetail job = JobBuilder.newJob(JobProgrammeTV.class).build();
-		Trigger trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 0 3 * * ?")).build();
+		Trigger trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 0 1 * * ?")).build();
 		
 		try {
 			ordonnanceur = new StdSchedulerFactory().getScheduler();
@@ -74,8 +74,6 @@ public class ServiceProgrammeTV {
 			e.printStackTrace();
 		}
 	}
-	
-	private static ServiceProgrammeTV instance;
 	
 	private Scheduler ordonnanceur;
 	

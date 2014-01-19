@@ -13,7 +13,7 @@ import fr.epsi.progtv.services.ServiceChaines;
 
 @Path("/chaines")
 public class ChainesRessource {
-
+	
 	@GET
 	@Produces(Constantes.ENTETE_HTTP)
 	public List<Chaine> liste() {

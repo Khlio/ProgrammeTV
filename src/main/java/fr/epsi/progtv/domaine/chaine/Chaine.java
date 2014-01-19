@@ -54,10 +54,6 @@ public class Chaine implements Aggregat, Comparable<Chaine> {
 	public List<Programme> getProgrammes() {
 		return programmes;
 	}
-
-	public void setProgrammes(List<Programme> programmes) {
-		this.programmes = programmes;
-	}
 	
 	public Programme ajouteUnProgramme(Programme programme) {
 		programme.setChaine(this);

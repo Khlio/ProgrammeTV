@@ -6,11 +6,12 @@ import fr.epsi.progtv.domaine.EntrepotAggregats;
 
 public class EntrepotProgrammes extends EntrepotAggregats<Programme> {
 
+	private static class EntrepotProgrammesHolder {
+		private static final EntrepotProgrammes INSTANCE = new EntrepotProgrammes();
+	}
+	
 	public static EntrepotProgrammes getInstance() {
-		if (null == instance) {
-			instance = new EntrepotProgrammes();
-		}
-		return instance;
+		return EntrepotProgrammesHolder.INSTANCE;
 	}
 	
 	@Override
@@ -23,7 +24,5 @@ public class EntrepotProgrammes extends EntrepotAggregats<Programme> {
 	public void trie() {
 		Collections.sort(aggregats);
 	}
-	
-	private static EntrepotProgrammes instance;
 	
 }

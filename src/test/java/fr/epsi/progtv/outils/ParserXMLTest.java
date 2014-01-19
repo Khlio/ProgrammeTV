@@ -1,7 +1,10 @@
 package fr.epsi.progtv.outils;
 
-import static org.junit.Assert.assertFalse;
+import static org.fest.assertions.Assertions.assertThat;
 
+import java.io.IOException;
+
+import org.jdom2.JDOMException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,7 +14,7 @@ import fr.epsi.progtv.domaine.Entrepots;
 public class ParserXMLTest {
 	
 	@BeforeClass
-	public static void setUp() {
+	public static void setUp() throws JDOMException, IOException {
 		ParserXML.execute(ParserXMLTest.class.getClassLoader().getResourceAsStream("tnt_lite.xml"));
 	}
 	
@@ -22,8 +25,8 @@ public class ParserXMLTest {
 	
 	@Test
 	public void peutParserXML() {
-		assertFalse(Entrepots.chaines().get().isEmpty());
-		assertFalse(Entrepots.programmes().get().isEmpty());
+		assertThat(Entrepots.chaines().get()).isNotEmpty();
+		assertThat(Entrepots.programmes().get()).isNotEmpty();
 	}
 	
 }

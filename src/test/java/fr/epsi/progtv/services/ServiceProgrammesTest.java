@@ -1,8 +1,6 @@
 package fr.epsi.progtv.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.fest.assertions.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,7 @@ public class ServiceProgrammesTest {
 	public static void setUp() {
 		ServiceProgrammeTV.getInstance().recupereLeProgrammeTNT();
 		service = ServiceProgrammes.getInstance();
-		assertNotNull(service);
+		assertThat(service).isNotNull();
 	}
 	
 	@AfterClass
@@ -35,32 +33,32 @@ public class ServiceProgrammesTest {
 	public void peutRecupererTousLesProgrammes() {
 		List<Programme> lesProgrammes = service.tout();
 		
-		assertNotNull(lesProgrammes);
-		assertFalse(lesProgrammes.isEmpty());
+		assertThat(lesProgrammes).isNotNull();
+		assertThat(lesProgrammes).isNotEmpty();
 	}
 	
 	@Test
 	public void peutRecupererUnProgramme() {
 		Programme programme = service.detailsDe(1);
 		
-		assertNotNull(programme);
-		assertEquals(1, programme.getId().intValue());
+		assertThat(programme).isNotNull();
+		assertThat(programme.getId()).isEqualTo(1);
 	}
 	
 	@Test
 	public void peutRecupererLesProgrammesDuSoir() {
 		List<Programme> lesProgrammes = service.programmesDuSoir();
 		
-		assertNotNull(lesProgrammes);
-		assertEquals(2*19, lesProgrammes.size());
+		assertThat(lesProgrammes).isNotNull();
+		assertThat(lesProgrammes).hasSize(2*19);
 	}
 	
 	@Test
 	public void peutRecupererLesProgrammesDuSoirDuneChaine() {
 		List<Programme> lesProgrammes = service.programmesDuSoirDeLaChaine(1);
 		
-		assertNotNull(lesProgrammes);
-		assertEquals(2, lesProgrammes.size());
+		assertThat(lesProgrammes).isNotNull();
+		assertThat(lesProgrammes).hasSize(2);
 	}
 	
 	@Test
@@ -72,41 +70,41 @@ public class ServiceProgrammesTest {
 		programmesDuneChaine.add(programme2);
 		List<Programme> lesProgrammes = service.programmesEntre20hEt21h(programmesDuneChaine);
 		
-		assertNotNull(lesProgrammes);
-		assertEquals(1, lesProgrammes.size());
-		assertEquals("Programme2", lesProgrammes.get(0).getNom());
+		assertThat(lesProgrammes).isNotNull();
+		assertThat(lesProgrammes).hasSize(1);
+		assertThat(lesProgrammes.get(0).getNom()).isEqualTo("Programme2");
 	}
 	
 	@Test
 	public void peutRecupererLesProgrammesDuMoment() {
 		List<Programme> lesProgrammes = service.programmesDuMoment();
 		
-		assertNotNull(lesProgrammes);
-		assertEquals(3*19, lesProgrammes.size());
+		assertThat(lesProgrammes).isNotNull();
+		assertThat(lesProgrammes).hasSize(3*19);
 	}
 	
 	@Test
 	public void peutRecupererLesProgrammesDuMomentDuneChaine() {
 		List<Programme> lesProgrammes = service.programmesDuMomentDeLaChaine(1);
 		
-		assertNotNull(lesProgrammes);
-		assertEquals(3, lesProgrammes.size());
+		assertThat(lesProgrammes).isNotNull();
+		assertThat(lesProgrammes).hasSize(3);
 	}
 	
 	@Test
 	public void peutRecupererLesProgrammesDuneChaine() {
 		List<Programme> lesProgrammes = service.programmesDuneChaine(1);
 		
-		assertNotNull(lesProgrammes);
-		assertFalse(lesProgrammes.isEmpty());
+		assertThat(lesProgrammes).isNotNull();
+		assertThat(lesProgrammes).isNotEmpty();
 	}
 	
 	@Test
 	public void peutRecupererLesProgrammesDuneChaineEnFonctionDuneDate() {
 		List<Programme> lesProgrammes = service.programmesDuneChaine(1, OutilDate.dateAujourdhui());
 		
-		assertNotNull(lesProgrammes);
-		assertFalse(lesProgrammes.isEmpty());
+		assertThat(lesProgrammes).isNotNull();
+		assertThat(lesProgrammes).isNotEmpty();
 	}
 	
 	@Test
@@ -116,26 +114,44 @@ public class ServiceProgrammesTest {
 		String jour = (10 > aujourdhui.getJour() ? "0" + aujourdhui.getJour() : aujourdhui.getJour()).toString();
 		List<Programme> lesProgrammes = service.programmesDuneChaine(1, "" + aujourdhui.getAnnee() + mois + jour);
 		
-		assertNotNull(lesProgrammes);
-		assertFalse(lesProgrammes.isEmpty());
+		assertThat(lesProgrammes).isNotNull();
+		assertThat(lesProgrammes).isNotEmpty();
 	}
 	
 	@Test
 	public void peutRecupererLesDetailsDuProgrammePrecedent() {
 		List<Programme> lesProgrammes = service.programmesDuneChaine(1, OutilDate.dateAujourdhui());
+		Programme programmePrecedent = service.detailsDuProgrammePrecedent(lesProgrammes.get(1).getId());
+		
+		assertThat(programmePrecedent).isNotNull();
+		assertThat(programmePrecedent).isEqualTo(lesProgrammes.get(0));
+	}
+	
+	@Test
+	public void peutRecupererLesDetailsDuProgrammePrecedentLePremier() {
+		List<Programme> lesProgrammes = service.programmesDuneChaine(1, OutilDate.dateAujourdhui());
 		Programme programmePrecedent = service.detailsDuProgrammePrecedent(lesProgrammes.get(0).getId());
 		
-		assertNotNull(programmePrecedent);
-		assertEquals(lesProgrammes.get(lesProgrammes.size()-1), programmePrecedent);
+		assertThat(programmePrecedent).isNotNull();
+		assertThat(programmePrecedent).isEqualTo(lesProgrammes.get(lesProgrammes.size() - 1));
 	}
 	
 	@Test
 	public void peutRecupererLesDetailsDuProgrammeSuivant() {
 		List<Programme> lesProgrammes = service.programmesDuneChaine(1, OutilDate.dateAujourdhui());
-		Programme programmeSuivant = service.detailsDuProgrammeSuivant(lesProgrammes.get(lesProgrammes.size()-1).getId());
+		Programme programmeSuivant = service.detailsDuProgrammeSuivant(lesProgrammes.get(lesProgrammes.size() - 2).getId());
 		
-		assertNotNull(programmeSuivant);
-		assertEquals(lesProgrammes.get(0), programmeSuivant);
+		assertThat(programmeSuivant).isNotNull();
+		assertThat(programmeSuivant).isEqualTo(lesProgrammes.get(lesProgrammes.size() - 1));
+	}
+	
+	@Test
+	public void peutRecupererLesDetailsDuProgrammeSuivantLeDernier() {
+		List<Programme> lesProgrammes = service.programmesDuneChaine(1, OutilDate.dateAujourdhui());
+		Programme programmeSuivant = service.detailsDuProgrammeSuivant(lesProgrammes.get(lesProgrammes.size() - 1).getId());
+		
+		assertThat(programmeSuivant).isNotNull();
+		assertThat(programmeSuivant).isEqualTo(lesProgrammes.get(0));
 	}
 	
 	private static ServiceProgrammes service;

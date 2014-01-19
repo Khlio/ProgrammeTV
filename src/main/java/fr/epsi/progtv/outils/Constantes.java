@@ -2,7 +2,7 @@ package fr.epsi.progtv.outils;
 
 import javax.ws.rs.core.MediaType;
 
-public class Constantes {
+public final class Constantes {
 
 	public static final String URL_ZIP_XML = "http://kevinpato.free.fr/xmltv/download/tnt_lite.zip/tnt_lite.xml";
 	

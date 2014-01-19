@@ -21,21 +21,17 @@ import fr.epsi.progtv.domaine.programme.Programme;
 import fr.epsi.progtv.domaine.programme.Realisateur;
 import fr.epsi.progtv.services.ServiceChaines;
 
-public class ParserXML {
+public final class ParserXML {
 	
 	private ParserXML() {
 	}
 	
-	public static void execute(InputStream fichierXML) {
+	public static void execute(InputStream fichierXML) throws JDOMException, IOException {
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = null;
-		try {
-			sxb.setXMLReaderFactory(XMLReaders.NONVALIDATING);
-			sxb.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-			document = sxb.build(fichierXML);
-		} catch (JDOMException | IOException e) {
-			e.printStackTrace();
-		}
+		sxb.setXMLReaderFactory(XMLReaders.NONVALIDATING);
+		sxb.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+		document = sxb.build(fichierXML);
 		Entrepots.nettoie();
 		chargerChaine(document);
 		chargerProgrammes(document);

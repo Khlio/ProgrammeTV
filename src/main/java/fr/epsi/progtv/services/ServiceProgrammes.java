@@ -12,17 +12,18 @@ import fr.epsi.progtv.outils.Constantes;
 import fr.epsi.progtv.outils.OutilDate;
 
 public class ServiceProgrammes {
-
+	
 	private ServiceProgrammes() {
 		programmes = Entrepots.programmes();
 		serviceChaines = ServiceChaines.getInstance();
 	}
 	
+	private static class ServiceProgrammesHolder {
+		private static final ServiceProgrammes INSTANCE = new ServiceProgrammes();
+	}
+	
 	public static ServiceProgrammes getInstance() {
-		if (null == instance) {
-			instance = new ServiceProgrammes();
-		}
-		return instance;
+		return ServiceProgrammesHolder.INSTANCE;
 	}
 	
 	public List<Programme> tout() {
@@ -147,8 +148,6 @@ public class ServiceProgrammes {
 		}
 		return programmeSuivant;
 	}
-	
-	private static ServiceProgrammes instance;
 	
 	private EntrepotProgrammes programmes;
 	private ServiceChaines serviceChaines;

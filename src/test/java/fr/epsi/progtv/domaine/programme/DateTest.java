@@ -1,6 +1,6 @@
 package fr.epsi.progtv.domaine.programme;
 
-import static org.junit.Assert.assertEquals;
+import static org.fest.assertions.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ public class DateTest {
 		Date date = new Date();
 		date.setJour(1);
 		
-		assertEquals(Integer.valueOf(1), date.getJour());
+		assertThat(date.getJour()).isEqualTo(1);
 	}
 	
 	@Test
@@ -19,7 +19,7 @@ public class DateTest {
 		Date date = new Date();
 		date.setMois(1);
 		
-		assertEquals(Integer.valueOf(1), date.getMois());
+		assertThat(date.getMois()).isEqualTo(1);
 	}
 	
 	@Test
@@ -27,14 +27,14 @@ public class DateTest {
 		Date date = new Date();
 		date.setAnnee(2000);
 		
-		assertEquals(Integer.valueOf(2000), date.getAnnee());
+		assertThat(date.getAnnee()).isEqualTo(2000);
 	}
 	
 	@Test
 	public void peutAfficherUneDate() {
 		Date date = new Date(1, 1, 2000);
 		
-		assertEquals("01-01-2000", date.toString());
+		assertThat(date.toString()).isEqualTo("01-01-2000");
 	}
 	
 	@Test
@@ -42,7 +42,7 @@ public class DateTest {
 		Date date = new Date(1, 1, 2014);
 		Date datePrecedente = new Date(31, 12, 2013);
 		
-		assertEquals(1, date.compareTo(datePrecedente));
+		assertThat(date.compareTo(datePrecedente)).isEqualTo(1);
 	}
 	
 	@Test
@@ -50,7 +50,7 @@ public class DateTest {
 		Date date = new Date(31, 12, 2013);
 		Date dateSuivante = new Date(1, 1, 2014);
 		
-		assertEquals(-1, date.compareTo(dateSuivante));
+		assertThat(date.compareTo(dateSuivante)).isEqualTo(-1);
 	}
 	
 	@Test
@@ -58,7 +58,14 @@ public class DateTest {
 		Date date = new Date(25, 9, 1990);
 		Date dateIdentique = new Date(25, 9, 1990);
 		
-		assertEquals(0, date.compareTo(dateIdentique));
+		assertThat(date.compareTo(dateIdentique)).isEqualTo(0);
+	}
+	
+	@Test
+	public void peutDonnerUnHashCode() {
+		Date date = new Date(1, 1, 2014);
+		
+		assertThat(date.hashCode()).isEqualTo(32797);
 	}
 	
 }

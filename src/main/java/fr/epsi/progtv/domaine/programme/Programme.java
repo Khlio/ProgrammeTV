@@ -102,9 +102,6 @@ public class Programme implements Aggregat, Comparable<Programme> {
 	}
 
 	public Date getDateDebut() {
-		if (null == dateDebut) {
-			dateDebut = new Date();
-		}
 		return dateDebut;
 	}
 
@@ -113,9 +110,6 @@ public class Programme implements Aggregat, Comparable<Programme> {
 	}
 
 	public Date getDateFin() {
-		if (null == dateFin) {
-			dateFin = new Date();
-		}
 		return dateFin;
 	}
 
@@ -124,9 +118,6 @@ public class Programme implements Aggregat, Comparable<Programme> {
 	}
 
 	public Heure getHeureDebut() {
-		if (null == heureDebut) {
-			heureDebut = new Heure();
-		}
 		return heureDebut;
 	}
 
@@ -135,9 +126,6 @@ public class Programme implements Aggregat, Comparable<Programme> {
 	}
 
 	public Heure getHeureFin() {
-		if (null == heureFin) {
-			heureFin = new Heure();
-		}
 		return heureFin;
 	}
 
@@ -179,16 +167,6 @@ public class Programme implements Aggregat, Comparable<Programme> {
 
 	public void setActeurs(List<Personne> acteurs) {
 		this.acteurs = acteurs;
-	}
-	
-	public Personne ajouteActeur(Personne acteur) {
-		acteurs.add(acteur);
-		return acteur;
-	}
-	
-	public Personne supprimeActeur(Personne acteur) {
-		acteurs.remove(acteur);
-		return acteur;
 	}
 
 	public Personne getRealisateur() {

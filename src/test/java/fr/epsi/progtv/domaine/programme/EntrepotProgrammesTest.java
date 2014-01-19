@@ -1,8 +1,6 @@
 package fr.epsi.progtv.domaine.programme;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.fest.assertions.Assertions.assertThat;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,15 +23,15 @@ public class EntrepotProgrammesTest extends EntrepotAggregatsTest<Programme> {
 	
 	@Override
 	public void peutRecuperer() {
-		assertNotNull(entrepot);
-		assertNotNull(entrepot.get());
+		assertThat(entrepot).isNotNull();
+		assertThat(entrepot.get()).isNotNull();
 	}
 	
 	@Override
 	public void peutAjouter() {
 		entrepot.ajoute(new Programme("Dr House"));
 		
-		assertEquals(1, entrepot.get().size());
+		assertThat(entrepot.get()).hasSize(1);
 	}
 
 	@Override
@@ -41,7 +39,7 @@ public class EntrepotProgrammesTest extends EntrepotAggregatsTest<Programme> {
 		entrepot.ajoute(new Programme("test"));
 		entrepot.nettoie();
 		
-		assertTrue(entrepot.get().isEmpty());
+		assertThat(entrepot.get()).isEmpty();
 	}
 	
 	@Test
@@ -53,7 +51,7 @@ public class EntrepotProgrammesTest extends EntrepotAggregatsTest<Programme> {
 		entrepot.trie();
 		
 		for (int i = 0; i < entrepot.get().size(); i++) {
-			assertEquals(String.valueOf(i+1), entrepot.get().get(i).getNom());
+			assertThat(entrepot.get().get(i).getNom()).isEqualTo(String.valueOf(i+1));
 		}
 	}
 	

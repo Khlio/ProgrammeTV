@@ -7,16 +7,17 @@ import fr.epsi.progtv.domaine.chaine.Chaine;
 import fr.epsi.progtv.domaine.chaine.EntrepotChaines;
 
 public class ServiceChaines {
-
+	
 	private ServiceChaines() {
 		chaines = Entrepots.chaines();
 	}
 	
+	private static class ServiceChainesHolder {
+		private static final ServiceChaines INSTANCE = new ServiceChaines();
+	}
+	
 	public static ServiceChaines getInstance() {
-		if (null == instance) {
-			instance = new ServiceChaines();
-		}
-		return instance;
+		return ServiceChainesHolder.INSTANCE;
 	}
 	
 	public List<Chaine> tout() {
@@ -33,10 +34,6 @@ public class ServiceChaines {
 		}
 		return laChaine;
 	}
-	
-	private static ServiceChaines instance;
-	
-	private EntrepotChaines chaines;
 
 	public Chaine detailsDeLaChainePrecedente(Integer idChaine) {
 		Chaine chainePrecedente = null;
@@ -67,5 +64,7 @@ public class ServiceChaines {
 		int positionDeLaChaine = tout().indexOf(laChaine);
 		return positionDeLaChaine;
 	}
+	
+	private EntrepotChaines chaines;
 	
 }

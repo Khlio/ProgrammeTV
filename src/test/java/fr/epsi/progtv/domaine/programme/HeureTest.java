@@ -1,6 +1,6 @@
 package fr.epsi.progtv.domaine.programme;
 
-import static org.junit.Assert.assertEquals;
+import static org.fest.assertions.Assertions.assertThat;
 
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ public class HeureTest {
 		Heure heure = new Heure();
 		heure.setHeure(1);
 		
-		assertEquals(Integer.valueOf(1), heure.getHeure());
+		assertThat(heure.getHeure()).isEqualTo(1);
 	}
 	
 	@Test
@@ -19,14 +19,14 @@ public class HeureTest {
 		Heure heure = new Heure();
 		heure.setMinute(1);
 		
-		assertEquals(Integer.valueOf(1), heure.getMinute());
+		assertThat(heure.getMinute()).isEqualTo(1);
 	}
 	
 	@Test
 	public void peutAfficherUneHeure() {
 		Heure heure = new Heure(1, 1);
 		
-		assertEquals("01:01", heure.toString());
+		assertThat(heure.toString()).isEqualTo("01:01");
 	}
 	
 	@Test
@@ -34,7 +34,7 @@ public class HeureTest {
 		Heure heure = new Heure(12, 0);
 		Heure heurePrecedente = new Heure(11, 0);
 		
-		assertEquals(1, heure.compareTo(heurePrecedente));
+		assertThat(heure.compareTo(heurePrecedente)).isEqualTo(1);
 	}
 	
 	@Test
@@ -42,7 +42,7 @@ public class HeureTest {
 		Heure heure = new Heure(11, 0);
 		Heure heureSuivante = new Heure(12, 0);
 		
-		assertEquals(-1, heure.compareTo(heureSuivante));
+		assertThat(heure.compareTo(heureSuivante)).isEqualTo(-1);
 	}
 	
 	@Test
@@ -50,7 +50,14 @@ public class HeureTest {
 		Heure heure = new Heure(16, 4);
 		Heure heureIdentique = new Heure(16, 4);
 		
-		assertEquals(0, heure.compareTo(heureIdentique));
+		assertThat(heure.compareTo(heureIdentique)).isEqualTo(0);
+	}
+	
+	@Test
+	public void peutDonnerUnHashCode() {
+		Heure heure = new Heure(16, 4);
+		
+		assertThat(heure.hashCode()).isEqualTo(1101);
 	}
 	
 }

@@ -12,10 +12,6 @@ public abstract class Personne implements Serializable {
 
 	private String nomComplet;
 	
-	public Personne() {
-		this("");
-	}
-	
 	public Personne(String nomComplet) {
 		setNomComplet(nomComplet);
 	}

@@ -23,10 +23,6 @@ public abstract class EntrepotAggregats<T extends Aggregat> implements Entrepot<
 		aggregats.clear();
 	}
 	
-	@Override
-	public void trie() {
-	}
-	
 	protected final List<T> aggregats = new ArrayList<>();
 	
 }

@@ -6,18 +6,17 @@ import fr.epsi.progtv.domaine.EntrepotAggregats;
 
 public class EntrepotChaines extends EntrepotAggregats<Chaine> {
 	
+	private static class EntrepotChainesHolder {
+		private static final EntrepotChaines INSTANCE = new EntrepotChaines();
+	}
+	
 	public static EntrepotChaines getInstance() {
-		if (null == instance) {
-			instance = new EntrepotChaines();
-		}
-		return instance;
+		return EntrepotChainesHolder.INSTANCE;
 	}
 	
 	@Override
 	public void trie() {
 		Collections.sort(aggregats);
 	}
-	
-	private static EntrepotChaines instance;
 	
 }

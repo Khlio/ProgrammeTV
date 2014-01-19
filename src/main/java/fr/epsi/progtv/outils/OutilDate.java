@@ -7,7 +7,7 @@ import java.util.TimeZone;
 import fr.epsi.progtv.domaine.programme.Date;
 import fr.epsi.progtv.domaine.programme.Heure;
 
-public class OutilDate {
+public final class OutilDate {
 
 	private OutilDate() {
 	}

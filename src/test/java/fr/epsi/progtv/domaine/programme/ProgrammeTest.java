@@ -1,8 +1,6 @@
 package fr.epsi.progtv.domaine.programme;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.fest.assertions.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +15,7 @@ public class ProgrammeTest {
 	public void peutDonnerUnIdentifiant() {
 		Programme programme = new Programme();
 		
-		assertNotNull(programme.getId());
+		assertThat(programme.getId()).isNotNull();
 	}
 	
 	@Test
@@ -25,7 +23,7 @@ public class ProgrammeTest {
 		Programme programme = new Programme();
 		programme.setNom("test");
 		
-		assertEquals("test", programme.getNom());
+		assertThat(programme.getNom()).isEqualTo("test");
 	}
 	
 	@Test
@@ -33,43 +31,39 @@ public class ProgrammeTest {
 		Programme programme = new Programme();
 		programme.setDescription("test");
 		
-		assertEquals("test", programme.getDescription());
+		assertThat(programme.getDescription()).isEqualTo("test");
 	}
 	
 	@Test
 	public void peutDonnerUneDateDeDebut() {
 		Programme programme = new Programme();
-		programme.setDateDebut(new Date());
 		
-		assertNotNull(programme.getDateDebut());
-		assertEquals(new Date(), programme.getDateDebut());
+		assertThat(programme.getDateDebut()).isNotNull();
+		assertThat(programme.getDateDebut()).isEqualTo(new Date());
 	}
 	
 	@Test
 	public void peutDonnerUneDateDeFin() {
 		Programme programme = new Programme();
-		programme.setDateFin(new Date());
 		
-		assertNotNull(programme.getDateFin());
-		assertEquals(new Date(), programme.getDateFin());
+		assertThat(programme.getDateFin()).isNotNull();
+		assertThat(programme.getDateFin()).isEqualTo(new Date());
 	}
 	
 	@Test
 	public void peutDonnerUneHeureDeDebut() {
 		Programme programme = new Programme();
-		programme.setHeureDebut(new Heure());
 		
-		assertNotNull(programme.getHeureDebut());
-		assertEquals(new Heure(), programme.getHeureDebut());
+		assertThat(programme.getHeureDebut()).isNotNull();
+		assertThat(programme.getHeureDebut()).isEqualTo(new Heure());
 	}
 	
 	@Test
 	public void peutDonnerUneHeureDeFin() {
 		Programme programme = new Programme();
-		programme.setHeureFin(new Heure());
 		
-		assertNotNull(programme.getHeureFin());
-		assertEquals(new Heure(), programme.getHeureFin());
+		assertThat(programme.getHeureFin()).isNotNull();
+		assertThat(programme.getHeureFin()).isEqualTo(new Heure());
 	}
 	
 	@Test
@@ -77,8 +71,8 @@ public class ProgrammeTest {
 		Programme programme = new Programme();
 		programme.setChaine(new Chaine("test"));
 		
-		assertNotNull(programme.getChaine());
-		assertEquals("test", programme.getChaine().getNom());
+		assertThat(programme.getChaine()).isNotNull();
+		assertThat(programme.getChaine().getNom()).isEqualTo("test");
 	}
 	
 	@Test
@@ -86,7 +80,7 @@ public class ProgrammeTest {
 		Programme programme = new Programme();
 		programme.setCsa("test");
 		
-		assertEquals("test", programme.getCsa());
+		assertThat(programme.getCsa()).isEqualTo("test");
 	}
 	
 	@Test
@@ -94,7 +88,7 @@ public class ProgrammeTest {
 		Programme programme = new Programme();
 		programme.setCategorie("test");
 		
-		assertEquals("Test", programme.getCategorie());
+		assertThat(programme.getCategorie()).isEqualTo("Test");
 	}
 	
 	@Test
@@ -104,9 +98,9 @@ public class ProgrammeTest {
 		acteurs.add(new Acteur("test"));
 		programme.setActeurs(acteurs);
 		
-		assertNotNull(programme.getActeurs());
-		assertEquals(1, programme.getActeurs().size());
-		assertEquals("test", programme.getActeurs().get(0).getNomComplet());
+		assertThat(programme.getActeurs()).isNotNull();
+		assertThat(programme.getActeurs()).hasSize(1);
+		assertThat(programme.getActeurs().get(0).getNomComplet()).isEqualTo("test");
 	}
 	
 	@Test
@@ -114,8 +108,8 @@ public class ProgrammeTest {
 		Programme programme = new Programme();
 		programme.setRealisateur(new Realisateur("test"));
 		
-		assertNotNull(programme.getRealisateur());
-		assertEquals("test", programme.getRealisateur().getNomComplet());
+		assertThat(programme.getRealisateur()).isNotNull();
+		assertThat(programme.getRealisateur().getNomComplet()).isEqualTo("test");
 	}
 	
 	@Test
@@ -123,7 +117,7 @@ public class ProgrammeTest {
 		Programme programme = new Programme();
 		programme.setImage("test");
 		
-		assertEquals("test", programme.getImage());
+		assertThat(programme.getImage()).isEqualTo("test");
 	}
 	
 	@Test
@@ -131,7 +125,7 @@ public class ProgrammeTest {
 		Programme programme = new Programme();
 		programme.setDateRealisation("test");
 		
-		assertEquals("test", programme.getDateRealisation());
+		assertThat(programme.getDateRealisation()).isEqualTo("test");
 	}
 	
 	@Test
@@ -139,7 +133,7 @@ public class ProgrammeTest {
 		Programme programme = new Programme();
 		programme.setDeuxiemeNom("test");
 		
-		assertEquals("test", programme.getDeuxiemeNom());
+		assertThat(programme.getDeuxiemeNom()).isEqualTo("test");
 	}
 	
 	@Test
@@ -148,7 +142,7 @@ public class ProgrammeTest {
 		programme.setHeureFin(new Heure(1, 25));
 		programme.setDuree();
 		
-		assertEquals(Integer.valueOf(85), programme.getDuree());
+		assertThat(programme.getDuree()).isEqualTo(85);
 	}
 	
 	@Test
@@ -159,16 +153,16 @@ public class ProgrammeTest {
 		Programme.resetId();
 		Programme premierProgramme = new Programme();
 		
-		assertNotNull(premierProgramme.getId());
-		assertEquals(Integer.valueOf(1), premierProgramme.getId());
-		assertNotEquals(programme.getId(), premierProgramme.getId());
+		assertThat(premierProgramme.getId()).isNotNull();
+		assertThat(premierProgramme.getId()).isEqualTo(1);
+		assertThat(premierProgramme.getId()).isNotEqualTo(programme.getId());
 	}
 	
 	@Test
 	public void peutAfficherUnProgramme() {
 		Programme programme = new Programme("test");
 		
-		assertEquals("test", programme.toString());
+		assertThat(programme.toString()).isEqualTo("test");
 	}
 	
 	@Test
@@ -176,7 +170,7 @@ public class ProgrammeTest {
 		Programme programme = new Programme("19", new Date(), new Date(), new Heure(12, 0), new Heure(13, 0));
 		Programme programmePrecedente = new Programme("1", new Date(), new Date(), new Heure(11, 0), new Heure(12, 0));
 		
-		assertEquals(1, programme.compareTo(programmePrecedente));
+		assertThat(programme.compareTo(programmePrecedente)).isEqualTo(1);
 	}
 	
 	@Test
@@ -184,7 +178,7 @@ public class ProgrammeTest {
 		Programme programme = new Programme("1", new Date(), new Date(), new Heure(11, 0), new Heure(12, 0));
 		Programme programmeSuivante = new Programme("19", new Date(), new Date(), new Heure(12, 0), new Heure(13, 0));
 		
-		assertEquals(-1, programme.compareTo(programmeSuivante));
+		assertThat(programme.compareTo(programmeSuivante)).isEqualTo(-1);
 	}
 	
 	@Test
@@ -192,7 +186,7 @@ public class ProgrammeTest {
 		Programme programme = new Programme("9", new Date(), new Date(), new Heure(), new Heure());
 		Programme programmeIdentique = new Programme("9", new Date(), new Date(), new Heure(), new Heure());
 		
-		assertEquals(0, programme.compareTo(programmeIdentique));
+		assertThat(programme.compareTo(programmeIdentique)).isEqualTo(0);
 	}
 	
 }
