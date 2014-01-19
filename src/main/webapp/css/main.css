@@ -18,8 +18,8 @@ body {
 }
 
 .chaine a {
-	text-decoration:none;
-	color:black;
+	text-decoration: none;
+	color: black;
 }
 
 .programmes {	
@@ -88,4 +88,8 @@ body {
 
 .carousel .item {
   background-color: white;
+}
+
+.nav-tabs {
+	border-bottom: 0;
 }

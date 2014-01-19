@@ -1,7 +1,6 @@
 ﻿$(document).ready(function() {
 	var url = window.location.search;
-	var idProgramme = url.substring(url.lastIndexOf("=")+1);
-	var dateDuProgramme='';
+	var idProgramme = url.substring(url.lastIndexOf("=") + 1);
 	
 	$('.carousel').carousel({
 		interval: false
@@ -14,43 +13,45 @@
 		swipeRight: function(event, direction, distance, duration, fingerCount) {
 			$(this).parent().carousel('prev');
 		},
-		treshold:0
+		treshold: 0
 	});
 	
-	outils.ajaxRequest(outils.url+'/programmes/'+idProgramme,function(programme){
-		if(programme==undefined) document.location.href="index.html";
-		else{
+	outils.ajaxRequest(outils.url + '/programmes/' + idProgramme, function(programme) {
+		if (programme == undefined) {
+			document.location.href = "index.html";
+		} else {
 			var elements = programme.dateDebut.split('-');
-			dateDuProgramme=elements[2]+elements[1]+elements[0];
-			outils.ajaxRequest(outils.url+'/programmes/chaine/'+programme.chaine["@id"]+'/'+dateDuProgramme,function(json) {
-				if(json==undefined) document.location.href="index.html";
-				else{
-					var programmes=json.programme;					
-					var acteurs='';
-					for(var i=0;i<programmes.length;i++){
-						if(programmes[i].acteurs!=undefined){
-							acteurs='<p>Avec ';
-							for(var a=0; a<programmes[i].acteurs.length; a++){
-								acteurs+=programmes[i].acteurs[a].nomComplet+(a+1==programmes[i].acteurs.length?'':', ');
+			var dateDuProgramme = elements[2] + elements[1] + elements[0];
+			outils.ajaxRequest(outils.url + '/programmes/chaine/' + programme.chaine["@id"] + '/' + dateDuProgramme, function(json) {
+				if (json == undefined) {
+					document.location.href = "index.html";
+				} else {
+					var programmes = json.programme;					
+					var acteurs = '';
+					for (var i = 0; i < programmes.length; i++) {
+						var programme = programmes[i];
+						if (programme.acteurs != undefined) {
+							acteurs = '<p>Avec ';
+							for (var j = 0; j < programme.acteurs.length; j++) {
+								acteurs += programme.acteurs[j].nomComplet + (j+1 == programme.acteurs.length ? '' : ', ');
 							}
 						}
-						acteurs+='</p>';
-						var description =(programmes[i].description==undefined)?'Aucune description':programmes[i].description;
-						$('.carousel-inner').append(
-							'<div class="item'+(programmes[i]["@id"]==idProgramme?' active"':'"')+' id="'+programmes[i]["@id"]+'">'+
-								'<img class="img-responsive" src="'+(programmes[i].image!=undefined?programmes[i].image:"img/defaut.jpg")+'" title="'+programmes[i].nom+'" alt="'+programmes[i].nom+'">'+
-								'<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">'+
-									'<h3>'+programmes[i].nom+'</h3>'+
-									(programmes[i].deuxiemeNom!=undefined?'<h5>'+programmes[i].deuxiemeNom+'</h5>':'')+
-									'<p>'+programmes[i].heureDebut+' - '+programmes[i].heureFin+' ('+programmes[i].duree+' min) le '+programmes[i].dateDebut+' sur <a href="chaine.html?id='+programmes[i].chaine["@id"]+'">'+programmes[i].chaine.nom+'</a></p>'+
-									'<p>Genre : '+programmes[i].categorie+'</p>'+
-									'<p>Public : '+programmes[i].csa+'</p>'+
-									(programmes[i].dateRealisation!=undefined?'<p>Date de réalisation : '+programmes[i].dateRealisation+'</p>':'')+
-									(programmes[i].realisateur!=undefined?'<p>Réalisateur : '+programmes[i].realisateur.nomComplet+'</p>':'')+
-									acteurs+
-									'<p>'+description+'</p>'+						
-								'</div>'+
-							'</div>'
+						acteurs += '</p>';
+						var description = (programme.description == undefined ? 'Aucune description' : programme.description);
+						$('.carousel-inner').append('<div class="item' + (programme["@id"] == idProgramme ? ' active"' : '"') + ' id="' + programme["@id"] + '">'
+								+ '<img class="img-responsive" src="' + (programme.image != undefined ? programme.image : "img/defaut.jpg") + '" title="' + programme.nom + '" alt="' + programme.nom + '">'
+								+ '<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">'
+								+ '<h3>' + programme.nom + '</h3>'
+								+ (programme.deuxiemeNom != undefined ? '<h5>' + programme.deuxiemeNom + '</h5>' : '')
+								+ '<p>' + programme.heureDebut + ' - ' + programme.heureFin + ' (' + programme.duree + ' min) le ' + programme.dateDebut
+								+ ' sur <a href="chaine.html?id=' + programme.chaine["@id"] + '">' + programme.chaine.nom + '</a></p>'
+								+ '<p>Genre : ' + programme.categorie + '</p>'
+								+ '<p>Public : ' + programme.csa + '</p>'
+								+ (programme.dateRealisation != undefined ? '<p>Date de r&eacute;alisation : ' + programme.dateRealisation + '</p>' : '')
+								+ (programme.realisateur != undefined ? '<p>R&eacute;alisateur : ' + programme.realisateur.nomComplet + '</p>' : '')
+								+ acteurs + '<p>'+description+'</p>'
+								+ '</div>'
+								+ '</div>'
 						);
 					}
 				}
