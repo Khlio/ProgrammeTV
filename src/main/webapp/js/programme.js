@@ -31,16 +31,51 @@
 					for (var i = 0; i < programmes.length; i++) {
 						var programme = programmes[i];
 						if (programme.acteurs != undefined) {
-							acteurs = '<p>Avec ';
+							acteurs = '';
 							for (var j = 0; j < programme.acteurs.length; j++) {
 								acteurs += programme.acteurs[j].nomComplet + (j+1 == programme.acteurs.length ? '' : ', ');
 							}
-						}
-						acteurs += '</p>';
+							acteurs += '</p>';
+						} 
+						
 						var description = (programme.description == undefined ? 'Aucune description' : programme.description);
+						
 						$('.carousel-inner').append('<div class="item' + (programme["@id"] == idProgramme ? ' active"' : '"') + ' id="' + programme["@id"] + '">'
-								+ '<img class="img-responsive" src="' + (programme.image != undefined ? programme.image : "img/defaut.jpg") + '" title="' + programme.nom + '" alt="' + programme.nom + '">'
-								+ '<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">'
+								+ '<div class="visible-xs visible-sm" style="margin-left: 5px;">'
+								+ '<div class="media">'
+								+ '<img class="media-object pull-left" style="width: 176px; height: 136px;" src="' + (programme.image != undefined ? programme.image : "img/defaut.jpg") + '" title="' + programme.nom + '" alt="' + programme.nom + '">'
+								+ '<div class="media-body">'
+								+ '<p class="media-heading" style="margin-left: 10px;"><b>' + programme.heureDebut + '</b> sur <a href="chaine.html?id=' + programme.chaine["@id"] + '">' + programme.chaine.nom + '</a></p>'
+								+ '<p style="margin-left: 10px;">' +programme.categorie+ ' (' +programme.duree+ 'min)</p>'
+								+ '<p style="margin-left: 10px;">' +programme.csa+ '</p>'
+								+ '<p style="margin-left: 10px;">Le ' +programme.dateDebut+ '</p>'
+								+ '</div>'
+								+ '</div>'
+								+ '<h3 style="text-align: left;">' + programme.nom + '</h3>'
+								+ (programme.deuxiemeNom != undefined ? '<h5 style="text-align: left;">' + programme.deuxiemeNom + '</h5>' : '')
+								+ '</div>'
+								+ '<div class="panel panel-info">'
+								+ '<div class="panel-heading">'
+								+ '<h6 class="panel-title">R&eacute;sum&eacute;</h6>'
+								+ '</div>'
+								+ '<div class="panel-body">'
+								+ description
+								+ '</div>'
+								+ '</div>'
+								+ '<div class="panel panel-info">'
+								+ '<div class="panel-heading">'
+								+ '<h6 class="panel-title">Informations</h6>'
+								+ '</div>'
+								+ '<div class="panel-body">'
+								+ '<p><b>Horaire</b> : ' +programme.heureDebut+ ' - ' +programme.heureFin+ '</p>'
+								+ (programme.dateRealisation != undefined ? '<p><b>Date de r&eacute;alisation</b> : ' + programme.dateRealisation + '</p>' : '')
+								+ (programme.realisateur != undefined ? '<p><b>R&eacute;alisateur</b> : ' + programme.realisateur.nomComplet + '</p>' : '')
+								+ '<p><b>Acteurs</b> : ' +acteurs
+								+ '</div>'
+								+ '</div>'
+								
+								+ '<img class="hidden-xs hidden-sm img-responsive" src="' + (programme.image != undefined ? programme.image : "img/defaut.jpg") + '" title="' + programme.nom + '" alt="' + programme.nom + '">'
+								+ '<div class="hidden-xs hidden-sm col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">'
 								+ '<h3>' + programme.nom + '</h3>'
 								+ (programme.deuxiemeNom != undefined ? '<h5>' + programme.deuxiemeNom + '</h5>' : '')
 								+ '<p>' + programme.heureDebut + ' - ' + programme.heureFin + ' (' + programme.duree + ' min) le ' + programme.dateDebut
@@ -49,7 +84,7 @@
 								+ '<p>Public : ' + programme.csa + '</p>'
 								+ (programme.dateRealisation != undefined ? '<p>Date de r&eacute;alisation : ' + programme.dateRealisation + '</p>' : '')
 								+ (programme.realisateur != undefined ? '<p>R&eacute;alisateur : ' + programme.realisateur.nomComplet + '</p>' : '')
-								+ acteurs + '<p>'+description+'</p>'
+								+ '<p>Avec ' +acteurs+ '<p>'+description+'</p>'
 								+ '</div>'
 								+ '</div>'
 						);
