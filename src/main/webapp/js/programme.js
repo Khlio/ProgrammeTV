@@ -78,13 +78,35 @@
 								+ '<div class="hidden-xs hidden-sm col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">'
 								+ '<h3>' + programme.nom + '</h3>'
 								+ (programme.deuxiemeNom != undefined ? '<h5>' + programme.deuxiemeNom + '</h5>' : '')
-								+ '<p>' + programme.heureDebut + ' - ' + programme.heureFin + ' (' + programme.duree + ' min) le ' + programme.dateDebut
-								+ ' sur <a href="chaine.html?id=' + programme.chaine["@id"] + '">' + programme.chaine.nom + '</a></p>'
-								+ '<p>Genre : ' + programme.categorie + '</p>'
-								+ '<p>Public : ' + programme.csa + '</p>'
-								+ (programme.dateRealisation != undefined ? '<p>Date de r&eacute;alisation : ' + programme.dateRealisation + '</p>' : '')
-								+ (programme.realisateur != undefined ? '<p>R&eacute;alisateur : ' + programme.realisateur.nomComplet + '</p>' : '')
-								+ '<p>Avec ' +acteurs+ '<p>'+description+'</p>'
+								+ '<div class="panel panel-info">'
+								+ '<div class="panel-heading">'
+								+ '<h6 class="panel-title">Diffusion</h6>'
+								+ '</div>'
+								+ '<div class="panel-body">'
+								+ '<p><b>Horaire</b> : ' +programme.heureDebut+ ' - ' +programme.heureFin+ '</p>'
+								+ '<p><b>Genre</b> : ' +programme.categorie+ ' (' +programme.duree+ 'min) sur <a href="chaine.html?id=' + programme.chaine["@id"] + '">' + programme.chaine.nom + '</a></p>'
+								+ '<p><b>Public</b> : ' +programme.csa+ '</p>'
+								+ '<p><b>Date</b> : ' +programme.dateDebut+ '</p>'
+								+ '</div>'
+								+ '</div>'								
+								+ '<div class="panel panel-info">'
+								+ '<div class="panel-heading">'
+								+ '<h6 class="panel-title">R&eacute;sum&eacute;</h6>'
+								+ '</div>'
+								+ '<div class="panel-body">'
+								+ description
+								+ '</div>'
+								+ '</div>'
+								+ '<div class="panel panel-info">'
+								+ '<div class="panel-heading">'
+								+ '<h6 class="panel-title">Informations</h6>'
+								+ '</div>'
+								+ '<div class="panel-body">'
+								+ (programme.dateRealisation != undefined ? '<p><b>Date de r&eacute;alisation</b> : ' + programme.dateRealisation + '</p>' : '')
+								+ (programme.realisateur != undefined ? '<p><b>R&eacute;alisateur</b> : ' + programme.realisateur.nomComplet + '</p>' : '')
+								+ '<p><b>Acteurs</b> : ' +acteurs
+								+ '</div>'
+								+ '</div>'
 								+ '</div>'
 								+ '</div>'
 						);
