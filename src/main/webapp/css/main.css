@@ -17,7 +17,12 @@ body {
 	border-bottom: solid 1px;
 }
 
-.chaine a {
+.derniereChaine {
+	padding-bottom: 15px;
+	padding-top: 10px;
+}
+
+.chaine a, .derniereChaine a {
 	text-decoration: none;
 	color: black;
 }

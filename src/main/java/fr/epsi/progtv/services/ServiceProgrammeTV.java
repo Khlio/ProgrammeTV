@@ -54,7 +54,7 @@ public class ServiceProgrammeTV {
 	
 	public void executeTachePlanifiee() {
 		JobDetail job = JobBuilder.newJob(JobProgrammeTV.class).build();
-		Trigger trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 0 1 * * ?")).build();
+		Trigger trigger = TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 0 3 * * ?")).build();
 		
 		try {
 			ordonnanceur = new StdSchedulerFactory().getScheduler();

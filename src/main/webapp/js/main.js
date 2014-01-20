@@ -25,6 +25,7 @@ function remplirOnglet(json, onglet, premierProgramme, deuxiemeProgramme, troisi
 	var attributDIV = '';
 	var description = '';
 	var baliseFermante = '';
+	var nombreProgrammesParLigne = (troisiemeProgramme == '' ? 2 : 3);
 	$('#' + onglet).html('');
 	
 	for (var i = 0; i < programmes.length; i++) {
@@ -33,7 +34,7 @@ function remplirOnglet(json, onglet, premierProgramme, deuxiemeProgramme, troisi
 			baliseFermante = ((idChaine != programme.chaine["@id"] && idChaine != 0) ? '</div>' : '');
 			idChaine = programme.chaine["@id"];
 			$('#' + onglet).append(baliseFermante
-					+ '<div class="row chaine media" id="' + onglet + '-' + programme.chaine["@id"] + '">'
+					+ '<div class="row ' + (i+nombreProgrammesParLigne == programmes.length ? 'derniereChaine' : 'chaine') + ' media" id="' + onglet + '-' + programme.chaine["@id"] + '">'
 					+ '<a class="pull-left" href="chaine.html?id=' + programme.chaine["@id"] + '">'
 					+ '<img class="media-object img-responsive" src="img/' + programme.chaine["@id"] + '.gif" />'
 					+ '</a>'
