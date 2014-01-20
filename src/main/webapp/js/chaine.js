@@ -24,10 +24,11 @@ $(document).ready(function() {
 		} else {
 			var chaines = json.chaine;
 			for (var i = 0; i < chaines.length; i++) {
-				$('.carousel-inner').append('<div class="item ' + (chaines[i]["@id"] == idChaine ? 'active"' : '"') + ' id="' + chaines[i]["@id"] + '" align="center">'
+				$('.carousel-inner').append('<div class="item ' + (chaines[i]["@id"] == idChaine ? 'active"' : '"') + ' align="center">'
 						+ '<img src="img/carousel/' + chaines[i]["@id"] + '.gif" title="' + chaines[i].nom + '" alt="' + chaines[i].nom + '">'
+						+ '<table class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2" id="' + chaines[i]["@id"] + '"></table>'
 						+ '</div>');
-				affichageProgrammes(chaines[i]["@id"], dateDuJour);
+				affichageTemporaire(chaines[i]["@id"], dateDuJour);
 			}
 		}
 	});
@@ -76,4 +77,51 @@ function ajouterLigneProgrammes(idChaine, programmes) {
 	}
 	ligneProgramme += '</div>';							
 	$('#'+idChaine).append(ligneProgramme);
+}
+
+function ajouterTemporaire(idChaine, programme){
+	var ligneProgramme= '<tr style="border-bottom: solid 1px;">'
+		+ '<td style="border-right: solid 1px; width: 65px;">' +programme.heureDebut+ '</td>';
+	var description = (programme.description == undefined ? 'Aucune description' : programme.description.substr(0, 210) + "...");
+	if(programme.image != undefined){
+		ligneProgramme += '<td style="padding-left: 10px; width: 125px;">'
+			+ '<a href="programme.html?id=' + programme["@id"] + '">'
+			+ '<img src="' +programme.image+ '" title="' +programme.nom+ '" style="width: 100px; height: 77px"></a></td>'
+			+ '<td><a href="programme.html?id=' + programme["@id"] + '"><h4>' + programme.nom + '</h4></a>'
+			+ '<p>' +programme.categorie+ ' (' +programme.duree+ 'min)</p>'
+			+ '<p class="hidden-xs hidden-sm">' +description+ '</p>'
+			+ '</td>';
+	}else{
+		ligneProgramme += '<td colspan="2" style="padding-left: 10px;">'
+			+ '<a href="programme.html?id=' + programme["@id"] + '"><h4>' + programme.nom + '</h4></a>'
+			+ '<p>' +programme.categorie+ '</p>'
+			+ '<p class="hidden-xs hidden-sm">' +description+ '</p>'
+			+ '</td>';
+	}
+	
+	ligneProgramme+='</tr>';
+	$('#' + idChaine).append(ligneProgramme);
+	// $('#'+idChaine).append(
+		// '<tr style="border-bottom: solid 1px;">'
+		// + '<td style="border-right: solid 1px;">' +programme.heureDebut+ '</td>'
+		// + '<td style="padding-left: 10px;">'
+		// + '<a href="programme.html?id=' + programme["@id"] + '">'
+		// + baliseImage
+		// + '<h4>' + programme.nom + '</h4></a>'
+		// + '<p>' +programme.categorie+ '</p>'
+		// + '<p class="hidden-xs hidden-sm">' +description+ '</p>'
+		// + '</td>'
+		// + '</tr>'
+	// );
+}
+
+function affichageTemporaire(idChaine, dateDuJour){
+	outils.ajaxRequest(outils.url + '/programmes/chaine/' + idChaine + '/' + dateDuJour, function(json) {
+		if (json != undefined) {
+			var programmes = json.programme;						
+			for (var i = 0; i < programmes.length; i++) {				
+				ajouterTemporaire(idChaine,programmes[i]);
+			}
+		}
+	});
 }
