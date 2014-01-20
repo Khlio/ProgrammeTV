@@ -27,23 +27,6 @@ body {
 	color: black;
 }
 
-.programmes {	
-	padding-bottom: 10px;
-	padding-left: 8%;
-}
-
-.ligneProgrammes {
-	max-width: 83%;
-	margin-left: auto;
-	margin-right: auto;
-	border-bottom: solid 1px;
-}
-
-.ligne {
-	width: 100%;
-	border-bottom: solid 1px;
-}
-
 .footer {
     position: fixed;
     bottom: 0;
@@ -84,17 +67,36 @@ body {
 }
 
 .carousel .container {
-  background-color: white;
+	background-color: white;
 }
 
 .carousel-control {
-  width: 8%;
+	width: 8%;
 }
 
 .carousel .item {
-  background-color: white;
+	background-color: white;
 }
 
 .nav-tabs {
 	border-bottom: 0;
+}
+
+.ligneProgramme{
+	border-bottom: solid 1px #04519b;
+}
+
+.cellule-heure {
+	text-align: center;
+	border-right: solid 1px #04519b;
+	width: 65px;
+}
+
+.cellule-image {
+	padding-left: 10px;
+	width: 125px;
+}
+
+.cellule-programme {
+	padding-left: 10px;
 }
