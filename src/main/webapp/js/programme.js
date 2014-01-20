@@ -53,7 +53,6 @@
 								+ '</div>'
 								+ '<h3 style="text-align: left;">' + programme.nom + '</h3>'
 								+ (programme.deuxiemeNom != undefined ? '<h5 style="text-align: left;">' + programme.deuxiemeNom + '</h5>' : '')
-								+ '</div>'
 								+ '<div class="panel panel-info">'
 								+ '<div class="panel-heading">'
 								+ '<h6 class="panel-title">R&eacute;sum&eacute;</h6>'
@@ -71,6 +70,7 @@
 								+ (programme.dateRealisation != undefined ? '<p><b>Date de r&eacute;alisation</b> : ' + programme.dateRealisation + '</p>' : '')
 								+ (programme.realisateur != undefined ? '<p><b>R&eacute;alisateur</b> : ' + programme.realisateur.nomComplet + '</p>' : '')
 								+ '<p><b>Acteurs</b> : ' +acteurs
+								+ '</div>'
 								+ '</div>'
 								+ '</div>'
 								
