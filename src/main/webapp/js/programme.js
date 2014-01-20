@@ -30,12 +30,11 @@
 					var acteurs = '';
 					for (var i = 0; i < programmes.length; i++) {
 						var programme = programmes[i];
+						acteurs = '';
 						if (programme.acteurs != undefined) {
-							acteurs = '';
 							for (var j = 0; j < programme.acteurs.length; j++) {
 								acteurs += programme.acteurs[j].nomComplet + (j+1 == programme.acteurs.length ? '' : ', ');
 							}
-							acteurs += '</p>';
 						} 
 						
 						var description = (programme.description == undefined ? 'Aucune description' : programme.description);
@@ -69,7 +68,7 @@
 								+ '<p><b>Horaire</b> : ' +programme.heureDebut+ ' - ' +programme.heureFin+ '</p>'
 								+ (programme.dateRealisation != undefined ? '<p><b>Date de r&eacute;alisation</b> : ' + programme.dateRealisation + '</p>' : '')
 								+ (programme.realisateur != undefined ? '<p><b>R&eacute;alisateur</b> : ' + programme.realisateur.nomComplet + '</p>' : '')
-								+ '<p><b>Acteurs</b> : ' +acteurs
+								+ (programme.acteurs != undefined ? '<p><b>Acteurs</b> : ' +acteurs + '</p>' : '')
 								+ '</div>'
 								+ '</div>'
 								+ '</div>'
@@ -104,7 +103,7 @@
 								+ '<div class="panel-body">'
 								+ (programme.dateRealisation != undefined ? '<p><b>Date de r&eacute;alisation</b> : ' + programme.dateRealisation + '</p>' : '')
 								+ (programme.realisateur != undefined ? '<p><b>R&eacute;alisateur</b> : ' + programme.realisateur.nomComplet + '</p>' : '')
-								+ '<p><b>Acteurs</b> : ' +acteurs
+								+ (programme.acteurs != undefined ? '<p><b>Acteurs</b> : ' +acteurs + '</p>' : '')
 								+ '</div>'
 								+ '</div>'
 								+ '</div>'
