@@ -48,23 +48,22 @@ $(document).ready(function() {
 	});
 });
 
-function ajouterLigneProgramme(idChaine, programme, dernierProgramme){
+function ajouterLigneProgramme(idChaine, programme, dernierProgramme) {
 	var description = (programme.description == undefined ? 'Aucune description' : programme.description.substr(0, 200) + "...");
-	
-	var ligneProgramme= '<tr' +(dernierProgramme?'':' class="ligneProgramme"')+ '>'
-		+ '<td class="cellule-heure">' +programme.heureDebut+ '</td>';
+	var ligneProgramme = '<tr' + (dernierProgramme ? '' : ' class="ligneProgramme"') + '>'
+			+ '<td class="cellule-heure">' + programme.heureDebut + '</td>';
 		
-	if(programme.image != undefined){
+	if (programme.image != undefined) {
 		ligneProgramme += '<td class="cellule-image">'
-			+ '<a href="programme.html?id=' + programme["@id"] + '">'
-			+ '<img src="' +programme.image+ '" title="' +programme.nom+ '" style="width: 100px; height: 77px"></a></td>'
-			+ '<td>';
-	}else
+				+ '<a href="programme.html?id=' + programme["@id"] + '">'
+				+ '<img src="' + programme.image + '" title="' + programme.nom + '" style="width: 100px; height: 77px"></a></td>'
+				+ '<td>';
+	} else {
 		ligneProgramme += '<td colspan="2" class="cellule-programme">';
-	
+	}
 	ligneProgramme += '<a href="programme.html?id=' + programme["@id"] + '"><h4>' + programme.nom + '</h4></a>'
-			+ '<p>' +programme.categorie+ ' (' +programme.duree+ 'min)</p>'
-			+ '<p class="hidden-xs hidden-sm">' +description+ '</p>'
+			+ '<p>' + programme.categorie + ' (' + programme.duree + 'min)</p>'
+			+ '<p class="hidden-xs hidden-sm">' + description + '</p>'
 			+ '</td></tr>';
 			
 	$('#' + idChaine).append(ligneProgramme);
@@ -75,9 +74,7 @@ function affichageProgrammes(idChaine, dateDuJour){
 		if (json != undefined) {
 			var programmes = json.programme;
 			for (var i = 0; i < programmes.length; i++) {
-				var dernierProgramme = false;
-				if(i+1 == programmes.length) dernierProgramme = true;
-				ajouterLigneProgramme(idChaine,programmes[i],dernierProgramme);
+				ajouterLigneProgramme(idChaine, programmes[i], (i+1 == programmes.length));
 			}
 		}
 	});
