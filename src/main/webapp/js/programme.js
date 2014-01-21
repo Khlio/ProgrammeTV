@@ -27,7 +27,12 @@
 					document.location.href = "index.html";
 				} else {
 					var programmes = json.programme;					
-					var acteurs = '';
+					var acteurs = '';					
+					var enteteBlocInformation = '<div class="panel panel-info">'
+								+ '<div class="panel-heading">'
+								+ '<h6 class="panel-title">Informations</h6>'
+								+ '</div>';
+								
 					for (var i = 0; i < programmes.length; i++) {
 						var programme = programmes[i];
 						acteurs = '';
@@ -37,7 +42,21 @@
 							}
 						} 
 						
-						var description = (programme.description == undefined ? 'Aucune description' : programme.description);
+						var blocResume = '<div class="panel panel-info">'
+								+ '<div class="panel-heading">'
+								+ '<h6 class="panel-title">R&eacute;sum&eacute;</h6>'
+								+ '</div>'
+								+ '<div class="panel-body">'
+								+ (programme.description == undefined ? 'Aucune description.' : programme.description)
+								+ '</div>'
+								+ '</div>';
+								
+						if(programme.dateRealisation == undefined && programme.realisateur == undefined && programme.acteurs == undefined){
+							var corpsBlocInformation = '<p>Aucune information disponible.</p>';								
+						}else
+							var corpsBlocInformation = (programme.dateRealisation != undefined ? '<p><b>Date de r&eacute;alisation</b> : ' + programme.dateRealisation + '</p>' : '')
+								+ (programme.realisateur != undefined ? '<p><b>R&eacute;alisateur</b> : ' + programme.realisateur.nomComplet + '</p>' : '')
+								+ (programme.acteurs != undefined ? '<p><b>Acteurs</b> : ' +acteurs + '</p>' : '');
 						
 						$('.carousel-inner').append('<div class="item' + (programme["@id"] == idProgramme ? ' active"' : '"') + ' id="' + programme["@id"] + '">'
 								+ '<div class="visible-xs visible-sm" style="margin-left: 5px;">'
@@ -52,23 +71,11 @@
 								+ '</div>'
 								+ '<h3 style="text-align: left;">' + programme.nom + '</h3>'
 								+ (programme.deuxiemeNom != undefined ? '<h5 style="text-align: left;">' + programme.deuxiemeNom + '</h5>' : '')
-								+ '<div class="panel panel-info">'
-								+ '<div class="panel-heading">'
-								+ '<h6 class="panel-title">R&eacute;sum&eacute;</h6>'
-								+ '</div>'
-								+ '<div class="panel-body">'
-								+ description
-								+ '</div>'
-								+ '</div>'
-								+ '<div class="panel panel-info">'
-								+ '<div class="panel-heading">'
-								+ '<h6 class="panel-title">Informations</h6>'
-								+ '</div>'
+								+ blocResume
+								+ enteteBlocInformation
 								+ '<div class="panel-body">'
 								+ '<p><b>Horaire</b> : ' +programme.heureDebut+ ' - ' +programme.heureFin+ '</p>'
-								+ (programme.dateRealisation != undefined ? '<p><b>Date de r&eacute;alisation</b> : ' + programme.dateRealisation + '</p>' : '')
-								+ (programme.realisateur != undefined ? '<p><b>R&eacute;alisateur</b> : ' + programme.realisateur.nomComplet + '</p>' : '')
-								+ (programme.acteurs != undefined ? '<p><b>Acteurs</b> : ' +acteurs + '</p>' : '')
+								+ corpsBlocInformation
 								+ '</div>'
 								+ '</div>'
 								+ '</div>'
@@ -88,22 +95,10 @@
 								+ '<p><b>Date</b> : ' +programme.dateDebut+ '</p>'
 								+ '</div>'
 								+ '</div>'								
-								+ '<div class="panel panel-info">'
-								+ '<div class="panel-heading">'
-								+ '<h6 class="panel-title">R&eacute;sum&eacute;</h6>'
-								+ '</div>'
+								+ blocResume
+								+ enteteBlocInformation
 								+ '<div class="panel-body">'
-								+ description
-								+ '</div>'
-								+ '</div>'
-								+ '<div class="panel panel-info">'
-								+ '<div class="panel-heading">'
-								+ '<h6 class="panel-title">Informations</h6>'
-								+ '</div>'
-								+ '<div class="panel-body">'
-								+ (programme.dateRealisation != undefined ? '<p><b>Date de r&eacute;alisation</b> : ' + programme.dateRealisation + '</p>' : '')
-								+ (programme.realisateur != undefined ? '<p><b>R&eacute;alisateur</b> : ' + programme.realisateur.nomComplet + '</p>' : '')
-								+ (programme.acteurs != undefined ? '<p><b>Acteurs</b> : ' +acteurs + '</p>' : '')
+								+ corpsBlocInformation
 								+ '</div>'
 								+ '</div>'
 								+ '</div>'
