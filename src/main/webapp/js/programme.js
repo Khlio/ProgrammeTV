@@ -26,8 +26,8 @@
 				if (json == undefined) {
 					document.location.href = "index.html";
 				} else {
-					var programmes = json.programme;					
-					var acteurs = '';					
+					var programmes = json.programme;
+					var acteurs = '';
 					var enteteBlocInformation = '<div class="panel panel-info">'
 								+ '<div class="panel-heading">'
 								+ '<h6 class="panel-title">Informations</h6>'
@@ -51,8 +51,10 @@
 								+ '</div>'
 								+ '</div>';
 								
+						var informationsMobile = true;
 						if(programme.dateRealisation == undefined && programme.realisateur == undefined && programme.acteurs == undefined){
-							var corpsBlocInformation = '<p>Aucune information disponible.</p>';								
+							var corpsBlocInformation = '<p>Aucune information disponible.</p>';
+							informationsMobile = false;
 						}else
 							var corpsBlocInformation = (programme.dateRealisation != undefined ? '<p><b>Date de r&eacute;alisation</b> : ' + programme.dateRealisation + '</p>' : '')
 								+ (programme.realisateur != undefined ? '<p><b>R&eacute;alisateur</b> : ' + programme.realisateur.nomComplet + '</p>' : '')
@@ -75,11 +77,11 @@
 								+ enteteBlocInformation
 								+ '<div class="panel-body">'
 								+ '<p><b>Horaire</b> : ' +programme.heureDebut+ ' - ' +programme.heureFin+ '</p>'
-								+ corpsBlocInformation
+								+ (informationsMobile ? corpsBlocInformation : '')
 								+ '</div>'
 								+ '</div>'
 								+ '</div>'
-								
+	
 								+ '<img class="hidden-xs hidden-sm img-responsive" src="' + (programme.image != undefined ? programme.image : "img/defaut.jpg") + '" title="' + programme.nom + '" alt="' + programme.nom + '">'
 								+ '<div class="hidden-xs hidden-sm col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">'
 								+ '<h3>' + programme.nom + '</h3>'
@@ -94,7 +96,7 @@
 								+ '<p><b>Public</b> : ' +programme.csa+ '</p>'
 								+ '<p><b>Date</b> : ' +programme.dateDebut+ '</p>'
 								+ '</div>'
-								+ '</div>'								
+								+ '</div>'
 								+ blocResume
 								+ enteteBlocInformation
 								+ '<div class="panel-body">'
