@@ -56,10 +56,12 @@ body {
 
 #carousel-programme .carousel-inner h5 {
 	text-align: center;
+	color: darkslategray;
 }
 
 #carousel-programme .carousel-inner h3 {
 	text-align: center;
+	color: black;
 }
 
 .selectionChaine {
@@ -119,6 +121,8 @@ body {
 	position: absolute;
 	top: 12%;
 	font-size: 50px;
+	color: -webkit-link;
+	margin-left: 25%;
 }
 
 .droite {
@@ -126,4 +130,6 @@ body {
 	position: absolute;
 	top: 12%;
 	font-size: 50px;
+	color: -webkit-link;
+	margin-left: 73%;
 }
