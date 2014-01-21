@@ -32,7 +32,7 @@
 });
 
 function ajouterActeurs(acteurs) {
-	var lesActeurs = ''
+	var lesActeurs = '';
 	if (acteurs != undefined) {
 		for (var j = 0; j < acteurs.length; j++) {
 			lesActeurs += acteurs[j].nomComplet + (j+1 == acteurs.length ? '' : ', ');
@@ -74,7 +74,9 @@ function blocMobile(programme) {
 }
 
 function blocDesktop (programme){
-	return '<img class="hidden-xs hidden-sm img-responsive" src="' + (programme.image != undefined ? programme.image : "img/defaut.jpg") + '" title="' + programme.nom + '" alt="' + programme.nom + '">'
+	return '<div class="row hidden-xs hidden-sm"><a href="javascript:carouselPrecedent();" class="gauche" title="Programme pr&eacute;c&eacute;dent" alt="Programme pr&eacute;c&eacute;dent"><span class="glyphicon glyphicon-chevron-left"></span></a>'
+		+ '<img class="img-responsive" src="' + (programme.image != undefined ? programme.image : "img/defaut.jpg") + '" title="' + programme.nom + '" alt="' + programme.nom + '">'
+		+ '<a href="javascript:carouselSuivant();" class="droite" title="Programme suivant" alt="Programme suivant"><span class="glyphicon glyphicon-chevron-right"></span></a><div>'
 		+ '<div class="hidden-xs hidden-sm col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">'
 		+ '<h3>' + programme.nom + '</h3>'
 		+ (programme.deuxiemeNom != undefined ? '<h5>' + programme.deuxiemeNom + '</h5>' : '')
@@ -115,4 +117,12 @@ function blocResume (description) {
 		+ (description == undefined ? 'Aucune description.' : description)
 		+ '</div>'
 		+ '</div>';
+}
+
+function carouselSuivant() {
+	$('.carousel').carousel('next');
+}
+
+function carouselPrecedent() {
+	$('.carousel').carousel('prev');
 }

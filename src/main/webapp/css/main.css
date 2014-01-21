@@ -72,6 +72,7 @@ body {
 
 .carousel-control {
 	width: 8%;
+	font-size: 30px;
 }
 
 .carousel .item {
@@ -80,6 +81,18 @@ body {
 
 .nav-tabs {
 	border-bottom: 0;
+}
+
+.flecheGauche {
+	position: fixed !important;
+	top: 50% !important;
+	left: 3% !important; 
+}
+
+.flecheDroite {
+	position: fixed !important;
+	top: 50% !important;
+	right: 3% !important;
 }
 
 .ligneProgramme{
@@ -99,4 +112,22 @@ body {
 
 .cellule-programme {
 	padding-left: 10px;
+}
+
+.gauche {
+	text-decoration: none;
+	position: absolute;
+	top: 12%;
+	left: 29%;
+	width: 5%;
+	font-size: 50px;
+}
+
+.droite {
+	text-decoration: none;
+	position: absolute;
+	top: 12%;
+	right: 25%;
+	width: 5%;
+	font-size: 50px;
 }
