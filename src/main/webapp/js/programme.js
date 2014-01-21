@@ -61,8 +61,8 @@ function blocMobile(programme) {
 		+ '<p style="margin-left: 10px;">Le ' +programme.dateDebut+ '</p>'
 		+ '</div>'
 		+ '</div>'
-		+ '<h3 style="text-align: left;">' + programme.nom + '</h3>'
-		+ (programme.deuxiemeNom != undefined ? '<h5 style="text-align: left;">' + programme.deuxiemeNom + '</h5>' : '')
+		+ '<h3 style="color: black; text-align: left;">' + programme.nom + '</h3>'
+		+ (programme.deuxiemeNom != undefined ? '<h5 style="color: darkslategray; text-align: left;">' + programme.deuxiemeNom + '</h5>' : '')
 		+ blocResume (programme.description)
 		+ enteteBlocInformation()
 		+ '<div class="panel-body">'
@@ -74,12 +74,12 @@ function blocMobile(programme) {
 }
 
 function blocDesktop (programme){
-	return '<div class="row hidden-xs hidden-sm"><a href="javascript:carouselPrecedent();" class="gauche" title="Programme pr&eacute;c&eacute;dent" alt="Programme pr&eacute;c&eacute;dent"><span class="glyphicon glyphicon-chevron-left"></span></a>'
+	return '<div class="row hidden-xs hidden-sm"><a href="javascript:carouselPrecedent();" class="col-lg-offset-3 col-md-offset-3 gauche" title="Programme pr&eacute;c&eacute;dent" alt="Programme pr&eacute;c&eacute;dent"><span class="glyphicon glyphicon-chevron-left"></span></a>'
 		+ '<img class="img-responsive" src="' + (programme.image != undefined ? programme.image : "img/defaut.jpg") + '" title="' + programme.nom + '" alt="' + programme.nom + '">'
-		+ '<a href="javascript:carouselSuivant();" class="droite" title="Programme suivant" alt="Programme suivant"><span class="glyphicon glyphicon-chevron-right"></span></a><div>'
+		+ '<a href="javascript:carouselSuivant();" class="droite col-lg-offset-9 col-md-offset-9" title="Programme suivant" alt="Programme suivant"><span class="glyphicon glyphicon-chevron-right"></span></a><div>'
 		+ '<div class="hidden-xs hidden-sm col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1">'
-		+ '<h3>' + programme.nom + '</h3>'
-		+ (programme.deuxiemeNom != undefined ? '<h5>' + programme.deuxiemeNom + '</h5>' : '')
+		+ '<h3 style="color: black;">' + programme.nom + '</h3>'
+		+ (programme.deuxiemeNom != undefined ? '<h5 style="color: darkslategray;">' + programme.deuxiemeNom + '</h5>' : '')
 		+ '<div class="panel panel-info">'
 		+ '<div class="panel-heading">'
 		+ '<h6 class="panel-title">Diffusion</h6>'
