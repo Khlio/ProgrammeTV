@@ -11,7 +11,23 @@
             	}
             }
         });
-    }
+    },
+	
+	carousel : function () {
+		$('.carousel').carousel({
+			interval: false
+		});
+		
+		$('.carousel-inner').swipe({
+			swipeLeft: function(event, direction, distance, duration, fingerCount) {
+				$(this).parent().carousel('next'); 
+			},
+			swipeRight: function(event, direction, distance, duration, fingerCount) {
+				$(this).parent().carousel('prev');
+			},
+			treshold: 0
+		});
+	}
 };
 
 outils.ajaxRequest(outils.url + '/chaines', function(json) {
